@@ -35,7 +35,7 @@ enum MovieListViewModelSection { case movies }
 final class MovieListViewModelImpl {
   
   @Published private(set) var movies: [MovieItemDTO] = []
-  @Published private(set) var state: MovieListViewModelState = .loading
+  @Published private(set) var state: MovieListViewModelState = .finishedLoading
   
   private let model: MovieModel
   private var bindings = Set<AnyCancellable>()
@@ -53,6 +53,9 @@ extension MovieListViewModelImpl: MovieListViewModel {
   var loadingStatePublisher: Published<MovieListViewModelState>.Publisher { $state }
   
   func loadNextPage() {
+    
+    if state == .loading { return }
+    
     state = .loading
     
     let loadMoviesCompletionHandler: (Subscribers.Completion<Error>) -> Void = { [weak self] completion in

@@ -54,7 +54,7 @@ extension MovieModelImpl: MovieModel {
             break
           }
         } receiveValue: { [unowned self] movieDTOs in
-          self.database.save(dtos: movieDTOs, translation: self.translation)
+          self.database.save(dtos: movieDTOs, translation: self.translation, page: self.pageNumber)
             .sink { databaseCompletion in
               switch databaseCompletion {
               case .failure(let databaseError):

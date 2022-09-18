@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 protocol MovieTranslation {
-  func createMovies(from dtos: [MovieItemDTO], with context: NSManagedObjectContext) -> [MovieMO]
+  func createMovies(from dtos: [MovieItemDTO], page: Int, with context: NSManagedObjectContext) -> [MovieMO]
   func getMovieDTOs(from movies:[MovieMO]) -> [MovieItemDTO]
 }
 
@@ -20,8 +20,8 @@ final class MovieTranslationImpl: MovieTranslation {
     self.translator = translator
   }
   
-  func createMovies(from dtos: [MovieItemDTO], with context: NSManagedObjectContext) -> [MovieMO] {
-    dtos.compactMap { translator.translate(from: $0, with: context) }
+  func createMovies(from dtos: [MovieItemDTO], page: Int, with context: NSManagedObjectContext) -> [MovieMO] {
+    dtos.compactMap { translator.translate(from: $0, page: page, with: context) }
   }
   
   func getMovieDTOs(from movies: [MovieMO]) -> [MovieItemDTO] {

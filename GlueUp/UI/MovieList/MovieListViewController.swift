@@ -52,7 +52,7 @@ final class MovieListViewController: UITableViewController {
     if viewModel.hasLoadedData {
       viewModel.loadPersitentData()
     } else {
-      viewModel.loadNextPage()
+      startLoading(with: { viewModel.loadNextPage() })
     }
   }
   
@@ -88,9 +88,9 @@ final class MovieListViewController: UITableViewController {
       case .loading:
         self?.refreshControl?.beginRefreshing()
       case .finishedLoading:
-        self?.refreshControl?.endRefreshing()
+        self?.finishedLoading()
       case .error(let error):
-        self?.refreshControl?.endRefreshing()
+        self?.finishedLoading()
         self?.showError(error)
       }
     }
@@ -112,8 +112,19 @@ final class MovieListViewController: UITableViewController {
   
   private func tableLastItemReached() {
     if viewModel.hasLoadedData {
-      viewModel.loadNextPage()
+      startLoading(with: { viewModel.loadNextPage() })
     }
+  }
+  
+  private func startLoading(with action:(() -> Void)) {
+    view.isUserInteractionEnabled = false
+    refreshControl?.beginRefreshing()
+    action()
+  }
+  
+  private func finishedLoading() {
+    view.isUserInteractionEnabled = true
+    refreshControl?.endRefreshing()
   }
   
   private func updateSections() {
@@ -124,6 +135,6 @@ final class MovieListViewController: UITableViewController {
   }
   
   @objc private func refresh() {
-    viewModel.reloadData()
+    startLoading(with: { viewModel.reloadData() })
   }
 }

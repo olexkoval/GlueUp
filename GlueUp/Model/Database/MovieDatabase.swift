@@ -10,7 +10,7 @@ import CoreData
 import Combine
 
 protocol MovieDatabase {
-  func save(dtos: [MovieItemDTO], translation: MovieTranslation) -> AnyPublisher<[MovieMO], NSError>
+  func save(dtos: [MovieItemDTO], translation: MovieTranslation, page: Int) -> AnyPublisher<[MovieMO], NSError>
   func reset() -> AnyPublisher<[MovieMO], NSError>
   func fetchAllMovies() -> [MovieMO]
 }
@@ -34,8 +34,8 @@ final class MovieDatabaseImpl {
 
 extension MovieDatabaseImpl: MovieDatabase {
   
-  func save(dtos: [MovieItemDTO], translation: MovieTranslation) -> AnyPublisher<[MovieMO], NSError> {
-    _ = translation.createMovies(from: dtos, with: backgroundContext)
+  func save(dtos: [MovieItemDTO], translation: MovieTranslation, page: Int) -> AnyPublisher<[MovieMO], NSError> {
+    _ = translation.createMovies(from: dtos, page: page, with: backgroundContext)
     try! backgroundContext.save()
     
     return FetchedResultsPublisher(request: fetchRequest, context: mainContext).eraseToAnyPublisher()
@@ -65,10 +65,11 @@ private extension MovieDatabaseImpl {
   }
   
   var fetchRequest: NSFetchRequest<MovieMO> {
-    let sortOn = NSSortDescriptor(key: "id", ascending: true)
-    
+    let sortOnId = NSSortDescriptor(key: "id", ascending: true)
+    let sortOnPage = NSSortDescriptor(key: "page", ascending: true)
+
     let fetchRequest = MovieMO.fetchRequest()
-    fetchRequest.sortDescriptors = [sortOn]
+    fetchRequest.sortDescriptors = [sortOnPage, sortOnId]
     
     return fetchRequest
   }

@@ -10,7 +10,7 @@ import CoreData
 
 protocol MovieTranslator {
   func translate(from movie: MovieMO?) -> MovieItemDTO?
-  func translate(from dto: MovieItemDTO?, with context: NSManagedObjectContext) -> MovieMO?
+  func translate(from dto: MovieItemDTO?, page: Int, with context: NSManagedObjectContext) -> MovieMO?
 }
 
 final class MovieTranslatorImpl: MovieTranslator {
@@ -25,7 +25,7 @@ final class MovieTranslatorImpl: MovieTranslator {
                         overview: movie.overview)
   }
   
-  func translate(from dto: MovieItemDTO?, with context: NSManagedObjectContext) -> MovieMO? {
+  func translate(from dto: MovieItemDTO?, page: Int, with context: NSManagedObjectContext) -> MovieMO? {
     guard let dto = dto else { return nil }
     
     let movie = MovieMO(context: context)
@@ -35,6 +35,7 @@ final class MovieTranslatorImpl: MovieTranslator {
     movie.releaseDate = dto.releaseDate
     movie.voteCount = dto.voteCount
     movie.overview = dto.overview
+    movie.page = page
     
     return movie
   }
