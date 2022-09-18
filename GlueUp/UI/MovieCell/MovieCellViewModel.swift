@@ -23,7 +23,7 @@ final class MovieCellViewModelImpl: MovieCellViewModel {
     
     self.movie = movie
     
-    movieDescription = ""//"Release date: \(DateFormatter.sting(movie.releaseDate)) Votes: \(movie.voteCount)"
+    movieDescription = "Release date: \(DateFormatter.sting(movie.releaseDate)) Votes: \(movie.voteCount)"
     movieTitle = movie.title
   }
 }
