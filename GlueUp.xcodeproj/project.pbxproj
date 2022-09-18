@@ -23,6 +23,10 @@
 		4EC9211728D5D1EB00978F09 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9211628D5D1EB00978F09 /* MovieTableViewCell.swift */; };
 		4EC9211928D5D24300978F09 /* MovieCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9211828D5D24300978F09 /* MovieCellViewModel.swift */; };
 		4EC9211C28D5E07400978F09 /* DateFormatter+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9211B28D5E07400978F09 /* DateFormatter+String.swift */; };
+		4EC9211F28D60CA900978F09 /* DependencyRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9211E28D60CA900978F09 /* DependencyRegistry.swift */; };
+		4EC9212228D60D2700978F09 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9212128D60D2700978F09 /* NavigationCoordinator.swift */; };
+		4EC9212528D618D600978F09 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9212428D618D600978F09 /* MovieDetailsViewController.swift */; };
+		4EC9212728D618EA00978F09 /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9212628D618EA00978F09 /* MovieDetailsViewModel.swift */; };
 		4EE17C0C28CA589100F3DE0B /* GlueUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE17C0B28CA589100F3DE0B /* GlueUpTests.swift */; };
 		4EE17C2D28CA732300F3DE0B /* GlueUp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4EE17C2528CA732300F3DE0B /* GlueUp.xcdatamodeld */; };
 		4EE17C2E28CA732300F3DE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EE17C2728CA732300F3DE0B /* Assets.xcassets */; };
@@ -57,6 +61,10 @@
 		4EC9211628D5D1EB00978F09 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		4EC9211828D5D24300978F09 /* MovieCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCellViewModel.swift; sourceTree = "<group>"; };
 		4EC9211B28D5E07400978F09 /* DateFormatter+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+String.swift"; sourceTree = "<group>"; };
+		4EC9211E28D60CA900978F09 /* DependencyRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyRegistry.swift; sourceTree = "<group>"; };
+		4EC9212128D60D2700978F09 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
+		4EC9212428D618D600978F09 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
+		4EC9212628D618EA00978F09 /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
 		4EE17BEE28CA589000F3DE0B /* GlueUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlueUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EE17C0728CA589100F3DE0B /* GlueUpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlueUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EE17C0B28CA589100F3DE0B /* GlueUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlueUpTests.swift; sourceTree = "<group>"; };
@@ -109,6 +117,7 @@
 		4EC920ED28D35C0700978F09 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				4EC9212328D618A900978F09 /* MovieDetails */,
 				4EC9210F28D4932000978F09 /* MovieCell */,
 				4EC9210C28D4932000978F09 /* MovieList */,
 			);
@@ -181,6 +190,31 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		4EC9211D28D60C8100978F09 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				4EC9211E28D60CA900978F09 /* DependencyRegistry.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		4EC9212028D60D0700978F09 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				4EC9212128D60D2700978F09 /* NavigationCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		4EC9212328D618A900978F09 /* MovieDetails */ = {
+			isa = PBXGroup;
+			children = (
+				4EC9212428D618D600978F09 /* MovieDetailsViewController.swift */,
+				4EC9212628D618EA00978F09 /* MovieDetailsViewModel.swift */,
+			);
+			path = MovieDetails;
+			sourceTree = "<group>";
+		};
 		4EE17BE528CA589000F3DE0B = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +238,8 @@
 		4EE17BF028CA589000F3DE0B /* GlueUp */ = {
 			isa = PBXGroup;
 			children = (
+				4EC9212028D60D0700978F09 /* Coordinator */,
+				4EC9211D28D60C8100978F09 /* DI */,
 				4EC9211A28D5E03F00978F09 /* Extensions */,
 				4EC920EA28D35C0700978F09 /* App */,
 				4EC920EF28D35C0700978F09 /* Model */,
@@ -384,8 +420,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EC9212528D618D600978F09 /* MovieDetailsViewController.swift in Sources */,
 				4EC9210528D37E4200978F09 /* MovieModel.swift in Sources */,
 				4EC920F028D35C0800978F09 /* AppDelegate.swift in Sources */,
+				4EC9212228D60D2700978F09 /* NavigationCoordinator.swift in Sources */,
 				4EC9211C28D5E07400978F09 /* DateFormatter+String.swift in Sources */,
 				4EC9210328D3701600978F09 /* MovieTranslator.swift in Sources */,
 				4EE17C2D28CA732300F3DE0B /* GlueUp.xcdatamodeld in Sources */,
@@ -396,10 +434,12 @@
 				4EC9210728D3B4A300978F09 /* FetchedResultsPublisher.swift in Sources */,
 				4EC920F728D3617200978F09 /* MovieDatabase.swift in Sources */,
 				4EC920F128D35C0800978F09 /* SceneDelegate.swift in Sources */,
+				4EC9212728D618EA00978F09 /* MovieDetailsViewModel.swift in Sources */,
 				4EC920FB28D363A100978F09 /* MovieNetwork.swift in Sources */,
 				4EC920FE28D36F1900978F09 /* MovieMO+CoreDataClass.swift in Sources */,
 				4EC9211128D4932000978F09 /* MovieListViewController.swift in Sources */,
 				4EC920F928D3628900978F09 /* MovieItemDTO.swift in Sources */,
+				4EC9211F28D60CA900978F09 /* DependencyRegistry.swift in Sources */,
 				4EC9210128D36FF500978F09 /* MovieTranslation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

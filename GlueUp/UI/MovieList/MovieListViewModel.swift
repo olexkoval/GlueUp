@@ -90,4 +90,3 @@ extension MovieListViewModelImpl: MovieListViewModel {
       .store(in: &bindings)
   }
 }
-

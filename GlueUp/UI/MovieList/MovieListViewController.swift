@@ -14,22 +14,24 @@ final class MovieListViewController: UITableViewController {
   private typealias MoviesSnapshot = NSDiffableDataSourceSnapshot<MovieListViewModelSection, MovieItemDTO>
   
   private let viewModel: MovieListViewModel
+  weak var navigationCoordinator: NavigationCoordinator?
+  private var movieCellMaker: DependencyRegistry.MovieCellMaker!
+  
   private var bindings = Set<AnyCancellable>()
   
   private var dataSource: MoviesDataSource!
   
-  init(viewModel: MovieListViewModel) {
+  init(viewModel: MovieListViewModel,
+       navigationCoordinator: NavigationCoordinator,
+       movieCellMaker: @escaping DependencyRegistry.MovieCellMaker) {
+    
     self.viewModel = viewModel
+    self.navigationCoordinator = navigationCoordinator
+    self.movieCellMaker = movieCellMaker
     
     super.init(nibName: nil, bundle: nil)
     
-    dataSource = MoviesDataSource(tableView: tableView, cellProvider: { tableView, indexPath, movie in
-      let cell = tableView.dequeueReusableCell(
-        withIdentifier: MovieTableViewCell.identifier,
-        for: indexPath) as? MovieTableViewCell
-      cell?.viewModel = MovieCellViewModel(movie:movie)
-      return cell
-    })
+    dataSource = MoviesDataSource(tableView: tableView, cellProvider: self.movieCellMaker)
   }
   
   required init?(coder: NSCoder) {

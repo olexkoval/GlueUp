@@ -8,7 +8,12 @@
 import Foundation
 import Combine
 
-final class MovieCellViewModel {
+protocol MovieCellViewModel {
+  var movieTitle: String { get }
+  var movieDescription: String { get }
+}
+
+final class MovieCellViewModelImpl: MovieCellViewModel {
   let movieTitle: String
   let movieDescription: String
   
