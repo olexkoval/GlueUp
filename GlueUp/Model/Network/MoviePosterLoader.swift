@@ -49,7 +49,6 @@ extension MoviePosterLoaderImpl: MoviePosterLoader {
         } else {
           promise(.failure(MovieNetworkError.decode))
         }
-
       }
     }
     .handleEvents(receiveSubscription: onSubscription, receiveCancel: onCancel)

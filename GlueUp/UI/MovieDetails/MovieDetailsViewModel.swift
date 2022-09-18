@@ -41,9 +41,16 @@ extension MovieDetailsViewModelImpl: MovieDetailsViewModel {
   
   func loadMoviePosterImage() {
     moviePosterLoader.loadMoviePosterImage(movie: movie)
-      .sink { _ in } receiveValue: { [weak self] image in
-      self?.moviePosterImage = image
-      }.store(in: &bindings)
+      .sink { [weak self] completion in
+        switch completion {
+        case .finished:
+          break
+        case.failure:
+          self?.moviePosterImage = UIImage(named: "themoviedb") ?? UIImage()
+        }
+      } receiveValue: { [weak self] image in
+        self?.moviePosterImage = image
+        }.store(in: &bindings)
   }
   
   var id: String { "ID: \(movie.id)" }

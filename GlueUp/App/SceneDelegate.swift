@@ -8,7 +8,7 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-  
+
   var window: UIWindow?
   var dependencyRegistry: DependencyRegistry!
   var coordinator: NavigationCoordinator!
@@ -23,6 +23,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window?.rootViewController = UINavigationController(rootViewController: coordinator.rootViewController)
     window?.makeKeyAndVisible()
   }
-  
 }
 

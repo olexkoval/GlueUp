@@ -8,6 +8,7 @@
 import Foundation
 
 extension DateFormatter {
+  
   class func sting(_ date: Date) -> String {
     dateFormatter.string(from: date)
   }
@@ -18,6 +19,7 @@ extension DateFormatter {
 }
 
 private extension DateFormatter {
+  
   private class var dateFormatter: DateFormatter {
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "en_US_POSIX")
