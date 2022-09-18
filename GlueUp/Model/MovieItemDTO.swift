@@ -17,6 +17,7 @@ struct MovieItemDTO: Equatable, Hashable, Decodable {
   let releaseDate: Date
   let voteCount: Int32
   let overview: String
+  let posterPath: String
 }
 
 extension MovieItemDTO {
@@ -26,6 +27,7 @@ extension MovieItemDTO {
     case vote_count
     case release_date
     case overview
+    case poster_path
   }
   
   init(from decoder: Decoder) throws {
@@ -37,5 +39,6 @@ extension MovieItemDTO {
     let releaseDateString = try container.decode(String.self, forKey: .release_date)
     releaseDate = DateFormatter.date(releaseDateString) ?? Date.distantPast
     overview = try container.decode(String.self, forKey: .overview)
+    posterPath = try container.decode(String.self, forKey: .poster_path)
   }
 }

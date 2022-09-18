@@ -17,9 +17,9 @@ final class MovieListViewController: UITableViewController {
   weak var navigationCoordinator: NavigationCoordinator?
   private let movieCellMaker: DependencyRegistry.MovieCellMaker
   
-  private var bindings = Set<AnyCancellable>()
-  
+  private var bindings = Set<AnyCancellable>()  
   private var dataSource: MoviesDataSource!
+  private var initialDataRequested = false
   
   init(viewModel: MovieListViewModel,
        navigationCoordinator: NavigationCoordinator?,
@@ -49,11 +49,12 @@ final class MovieListViewController: UITableViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    if viewModel.hasLoadedData {
+    if viewModel.hasLoadedData && !initialDataRequested {
       viewModel.loadPersitentData()
     } else {
       startLoading(with: { viewModel.loadNextPage() })
     }
+    initialDataRequested = true
   }
   
   override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

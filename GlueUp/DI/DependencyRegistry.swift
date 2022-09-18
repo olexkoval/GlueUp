@@ -73,6 +73,7 @@ private extension DependencyRegistryImpl {
     container.register(MovieDatabase.self) { _ in MovieDatabaseImpl() }.inObjectScope(.container)
     container.register(MovieTranslator.self) { _ in MovieTranslatorImpl() }.inObjectScope(.container)
     container.register(MovieCellMaker.self) { [unowned self] _ in self.makeMovieCell }.inObjectScope(.container)
+    container.register(MoviePosterLoader.self) { _ in MovieNetworkImpl() }.inObjectScope(.container)
 
     container.register(MovieTranslation.self) { r in
       MovieTranslationImpl(translator: r.resolve(MovieTranslator.self)!)
@@ -87,7 +88,7 @@ private extension DependencyRegistryImpl {
   
   func registerViewModels() {
     container.register(MovieListViewModel.self) { r in MovieListViewModelImpl(model: r.resolve(MovieModel.self)!, errorHandler: r.resolve(MovieErrorHandler.self)!) }
-    container.register( MovieDetailsViewModel.self) { (r, movie: MovieItemDTO) in MovieDetailsViewModelImpl(movie: movie) }
+    container.register( MovieDetailsViewModel.self) { (r, movie: MovieItemDTO) in MovieDetailsViewModelImpl(movie: movie, moviePosterLoader: r.resolve(MoviePosterLoader.self)!) }
     container.register(MovieCellViewModel.self) { (r, movie: MovieItemDTO) in MovieCellViewModelImpl(movie: movie) }
   }
   

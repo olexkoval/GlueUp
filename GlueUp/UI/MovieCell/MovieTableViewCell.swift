@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class MovieTableViewCell: UITableViewCell {
   static let identifier = "MovieTableViewCell"
   
@@ -32,11 +31,5 @@ final class MovieTableViewCell: UITableViewCell {
   private func setUpViewModel() {
     textLabel?.text = viewModel?.movieTitle
     detailTextLabel?.text = viewModel?.movieDescription
-  }
-}
-
-private extension MovieTableViewCell {
-  struct C {
-    static let paddingOffset: CGFloat = 10.0
   }
 }

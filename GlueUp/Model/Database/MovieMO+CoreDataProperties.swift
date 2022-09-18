@@ -21,4 +21,6 @@ extension MovieMO {
   @NSManaged public var voteCount: Int32
   @NSManaged public var overview: String
   @NSManaged public var page: Int
+  @NSManaged public var posterPath: String
+
 }
