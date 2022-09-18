@@ -35,6 +35,7 @@ final class NavigationCoordinatorImpl: NavigationCoordinator {
     case .atMoviesList:
       break
     case .atMovieDetails:
+      showMoviesList()
       navState = .atMoviesList
     }
   }

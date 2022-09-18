@@ -15,14 +15,14 @@ final class MovieListViewController: UITableViewController {
   
   private let viewModel: MovieListViewModel
   weak var navigationCoordinator: NavigationCoordinator?
-  private var movieCellMaker: DependencyRegistry.MovieCellMaker!
+  private let movieCellMaker: DependencyRegistry.MovieCellMaker
   
   private var bindings = Set<AnyCancellable>()
   
   private var dataSource: MoviesDataSource!
   
   init(viewModel: MovieListViewModel,
-       navigationCoordinator: NavigationCoordinator,
+       navigationCoordinator: NavigationCoordinator?,
        movieCellMaker: @escaping DependencyRegistry.MovieCellMaker) {
     
     self.viewModel = viewModel
@@ -54,6 +54,20 @@ final class MovieListViewController: UITableViewController {
     } else {
       viewModel.loadNextPage()
     }
+  }
+  
+  override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
+    if bottomEdge >= scrollView.contentSize.height {
+      tableLastItemReached()
+    }
+  }
+  
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    let movie = viewModel.movies[indexPath.row]
+    let args = ["movie": movie]
+    navigationCoordinator?.next(arguments: args)
   }
   
   private func configRefreshControl() {
@@ -94,6 +108,12 @@ final class MovieListViewController: UITableViewController {
     }
     alertController.addAction(alertAction)
     present(alertController, animated: true, completion: nil)
+  }
+  
+  private func tableLastItemReached() {
+    if viewModel.hasLoadedData {
+      viewModel.loadNextPage()
+    }
   }
   
   private func updateSections() {

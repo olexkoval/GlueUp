@@ -9,8 +9,6 @@ import Foundation
 import Swinject
 
 protocol DependencyRegistry: AnyObject {
-  var container: Container { get }
-  var navigationCoordinator: NavigationCoordinator! { get }
   
   typealias navigationCoordinatorMaker = () -> NavigationCoordinator
   func makeNavigationCoordinator() -> NavigationCoordinator
@@ -27,8 +25,7 @@ protocol DependencyRegistry: AnyObject {
 
 final class DependencyRegistryImpl {
   
-  var container: Container
-  var navigationCoordinator: NavigationCoordinator!
+  private var container: Container
   
   init(container: Container = Container()) {
     
@@ -89,18 +86,21 @@ private extension DependencyRegistryImpl {
   
   func registerViewModels() {
     container.register(MovieListViewModel.self) { r in MovieListViewModelImpl(model: r.resolve(MovieModel.self)!) }
-    container.register( MovieDetailsViewModel.self) { (r, movie: MovieItemDTO)  in MovieDetailsViewModelImpl(movie: movie) }
+    container.register( MovieDetailsViewModel.self) { (r, movie: MovieItemDTO) in MovieDetailsViewModelImpl(movie: movie) }
     container.register(MovieCellViewModel.self) { (r, movie: MovieItemDTO) in MovieCellViewModelImpl(movie: movie) }
   }
   
   func registerViewControllers() {
+    
     container.register(MovieListViewController.self) { r in
       
       let viewModel = r.resolve(MovieListViewModel.self)!
-      let navigationCoordinator = r.resolve(NavigationCoordinator.self)!
       let movieCellMaker = r.resolve(MovieCellMaker.self)!
       
-      return MovieListViewController(viewModel: viewModel, navigationCoordinator: navigationCoordinator, movieCellMaker: movieCellMaker)
+      return MovieListViewController(viewModel: viewModel, navigationCoordinator: nil, movieCellMaker: movieCellMaker) }
+    
+      .initCompleted{ r, vc in
+        vc.navigationCoordinator = r.resolve(NavigationCoordinator.self)!
     }
     
     container.register(MovieDetailsViewController.self) { (r, movie: MovieItemDTO) in
