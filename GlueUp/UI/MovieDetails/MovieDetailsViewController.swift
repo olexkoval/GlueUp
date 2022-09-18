@@ -61,6 +61,7 @@ class MovieDetailsViewController: UIViewController {
       $0.translatesAutoresizingMaskIntoConstraints = false
     }
     overviewLabel.numberOfLines = 0
+    imageView.contentMode = .scaleAspectFit
   }
   
   private func setupConstraints() {

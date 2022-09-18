@@ -73,7 +73,7 @@ private extension DependencyRegistryImpl {
     container.register(MovieDatabase.self) { _ in MovieDatabaseImpl() }.inObjectScope(.container)
     container.register(MovieTranslator.self) { _ in MovieTranslatorImpl() }.inObjectScope(.container)
     container.register(MovieCellMaker.self) { [unowned self] _ in self.makeMovieCell }.inObjectScope(.container)
-    container.register(MoviePosterLoader.self) { _ in MovieNetworkImpl() }.inObjectScope(.container)
+    container.register(MoviePosterLoader.self) { _ in MoviePosterLoaderImpl() }.inObjectScope(.container)
 
     container.register(MovieTranslation.self) { r in
       MovieTranslationImpl(translator: r.resolve(MovieTranslator.self)!)
