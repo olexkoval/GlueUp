@@ -10,26 +10,25 @@ import Combine
 import JLTMDbClient
 
 enum MovieNetworkError: Error {
-  case url(URLError)
+  case url(Error)
   case urlRequest
   case decode
 }
 
 protocol MovieNetwork {
-  func load(page: Int) -> AnyPublisher<[MovieItemDTO], Error>
+  func load(page: Int) -> AnyPublisher<[MovieItemDTO], MovieNetworkError>
 }
 
 final class MovieNetworkImpl: MovieNetwork {
   
-  func load(page: Int) -> AnyPublisher<[MovieItemDTO], Error> {
+  func load(page: Int) -> AnyPublisher<[MovieItemDTO], MovieNetworkError> {
     var dataTask: URLSessionDataTask?
     
     let onSubscription: (Subscription) -> Void = { _ in dataTask?.resume() }
     let onCancel: () -> Void = { dataTask?.cancel() }
     
-    return Future<[MovieItemDTO], Error> { [weak self] promise in
-      guard let urlRequest = self?.getUrlRequest(page: page),
-            page <= C.maxPagesCount, page >= C.minPage else {
+    return Future<[MovieItemDTO], MovieNetworkError> { [weak self] promise in
+      guard let urlRequest = self?.getUrlRequest(page: page) else {
         promise(.failure(MovieNetworkError.urlRequest))
         return
       }
@@ -37,7 +36,7 @@ final class MovieNetworkImpl: MovieNetwork {
       dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
         guard let data = data else {
           if let error = error {
-            promise(.failure(error))
+            promise(.failure(MovieNetworkError.url(error)))
           }
           return
         }
@@ -58,6 +57,11 @@ final class MovieNetworkImpl: MovieNetwork {
 private extension MovieNetworkImpl {
   
   func getUrlRequest(page: Int) -> URLRequest? {
+    
+    if page > C.maxPagesCount || page < C.minPage {
+      return nil
+    }
+    
 #if DEBUG
     let scheme = kJLTMDbAPINoSSL
 #else

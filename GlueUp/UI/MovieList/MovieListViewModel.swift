@@ -8,14 +8,10 @@
 import Foundation
 import Combine
 
-enum MovieListViewModelError: Error, Equatable {
-  case moviesFetch
-}
-
 enum MovieListViewModelState: Equatable {
   case loading
   case finishedLoading
-  case error(MovieListViewModelError)
+  case error(NSError)
 }
 
 protocol MovieListViewModel {
@@ -38,10 +34,13 @@ final class MovieListViewModelImpl {
   @Published private(set) var state: MovieListViewModelState = .finishedLoading
   
   private let model: MovieModel
+  private let errorHandler: MovieErrorHandler
+
   private var bindings = Set<AnyCancellable>()
   
-  init(model: MovieModel) {
+  init(model: MovieModel, errorHandler: MovieErrorHandler) {
     self.model = model
+    self.errorHandler = errorHandler
   }
 }
 
@@ -58,12 +57,13 @@ extension MovieListViewModelImpl: MovieListViewModel {
     
     state = .loading
     
-    let loadMoviesCompletionHandler: (Subscribers.Completion<Error>) -> Void = { [weak self] completion in
+    let loadMoviesCompletionHandler: (Subscribers.Completion<MovieModelError>) -> Void = { [weak self] completion in
+      guard let self = self else { return }
       switch completion {
-      case .failure:
-        self?.state = .error(.moviesFetch)
+      case .failure(let modelError):
+        self.state = .error(self.errorHandler.handleMovieFetch(error: modelError))
       case .finished:
-        self?.state = .finishedLoading
+        self.state = .finishedLoading
       }
     }
     

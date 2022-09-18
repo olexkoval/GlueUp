@@ -104,7 +104,7 @@ final class MovieListViewController: UITableViewController {
   private func showError(_ error: Error) {
     let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
     let alertAction = UIAlertAction(title: "OK", style: .default) { [unowned self] _ in
-      self.dismiss(animated: true, completion: nil)
+      dismiss(animated: true, completion: nil)
     }
     alertController.addAction(alertAction)
     present(alertController, animated: true, completion: nil)

@@ -65,9 +65,10 @@ private extension DependencyRegistryImpl {
   
   func registerDependencies() {
     container.register(NavigationCoordinator.self) { [weak self] r in
-      return NavigationCoordinatorImpl(rootViewController: r.resolve(MovieListViewController.self)!, registry: self!)
+      NavigationCoordinatorImpl(rootViewController: r.resolve(MovieListViewController.self)!, registry: self!)
     }.inObjectScope(.container)
     
+    container.register(MovieErrorHandler.self) { _ in MovieErrorHandlerImpl() }.inObjectScope(.container)
     container.register(MovieNetwork.self) { _ in MovieNetworkImpl() }.inObjectScope(.container)
     container.register(MovieDatabase.self) { _ in MovieDatabaseImpl() }.inObjectScope(.container)
     container.register(MovieTranslator.self) { _ in MovieTranslatorImpl() }.inObjectScope(.container)
@@ -85,7 +86,7 @@ private extension DependencyRegistryImpl {
   }
   
   func registerViewModels() {
-    container.register(MovieListViewModel.self) { r in MovieListViewModelImpl(model: r.resolve(MovieModel.self)!) }
+    container.register(MovieListViewModel.self) { r in MovieListViewModelImpl(model: r.resolve(MovieModel.self)!, errorHandler: r.resolve(MovieErrorHandler.self)!) }
     container.register( MovieDetailsViewModel.self) { (r, movie: MovieItemDTO) in MovieDetailsViewModelImpl(movie: movie) }
     container.register(MovieCellViewModel.self) { (r, movie: MovieItemDTO) in MovieCellViewModelImpl(movie: movie) }
   }

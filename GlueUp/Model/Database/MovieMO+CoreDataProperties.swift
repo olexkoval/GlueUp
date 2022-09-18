@@ -12,7 +12,7 @@ import CoreData
 extension MovieMO {
   
   @nonobjc public class func fetchRequest() -> NSFetchRequest<MovieMO> {
-    return NSFetchRequest<MovieMO>(entityName: "MovieMO")
+    NSFetchRequest<MovieMO>(entityName: "MovieMO")
   }
   
   @NSManaged public var id: Int64

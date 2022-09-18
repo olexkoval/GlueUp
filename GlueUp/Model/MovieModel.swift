@@ -9,13 +9,13 @@ import Foundation
 import Combine
 
 enum MovieModelError: Error {
-  case networkError(Error)
+  case networkError(MovieNetworkError)
   case databaseError(NSError)
 }
 
 protocol MovieModel {
-  func loadNextPage() -> AnyPublisher<[MovieItemDTO], Error>
-  func reloadData() -> AnyPublisher<[MovieItemDTO], Error>
+  func loadNextPage() -> AnyPublisher<[MovieItemDTO], MovieModelError>
+  func reloadData() -> AnyPublisher<[MovieItemDTO], MovieModelError>
   func loadPesistentData() -> [MovieItemDTO]
   var pageNumber: Int { get }
 }
@@ -43,8 +43,8 @@ extension MovieModelImpl: MovieModel {
     set { UserDefaults.standard.set(newValue, forKey: C.pageNumberUserDefaultsKey) }
   }
   
-  func loadNextPage() -> AnyPublisher<[MovieItemDTO], Error> {
-    return Future<[MovieItemDTO], Error> { [unowned self] promise in
+  func loadNextPage() -> AnyPublisher<[MovieItemDTO], MovieModelError> {
+    return Future<[MovieItemDTO], MovieModelError> { [unowned self] promise in
       self.network.load(page: self.pageNumber + 1)
         .sink { networkCompletion in
           switch networkCompletion {
@@ -70,8 +70,8 @@ extension MovieModelImpl: MovieModel {
     }.eraseToAnyPublisher()
   }
   
-  func reloadData() -> AnyPublisher<[MovieItemDTO], Error> {
-    return Future<[MovieItemDTO], Error> { [unowned self] promise in
+  func reloadData() -> AnyPublisher<[MovieItemDTO], MovieModelError> {
+    return Future<[MovieItemDTO], MovieModelError> { [unowned self] promise in
       self.database.reset()
         .sink { resetCompletion in
           switch resetCompletion {
