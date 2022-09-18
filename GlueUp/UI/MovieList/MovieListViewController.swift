@@ -102,15 +102,6 @@ final class MovieListViewController: UITableViewController {
       .store(in: &bindings)
   }
   
-  private func showError(_ error: Error) {
-    let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-    let alertAction = UIAlertAction(title: "OK", style: .default) { [unowned self] _ in
-      dismiss(animated: true, completion: nil)
-    }
-    alertController.addAction(alertAction)
-    present(alertController, animated: true, completion: nil)
-  }
-  
   private func tableLastItemReached() {
     if viewModel.hasLoadedData {
       startLoading(with: { viewModel.loadNextPage() })

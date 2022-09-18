@@ -95,7 +95,7 @@ class MovieDetailsViewController: UIViewController {
     
     viewModel.moviePosterPublisher
       .receive(on: RunLoop.main)
-      .sink{ _ in } receiveValue: { [weak self] _ in
+      .sink { _ in } receiveValue: { [weak self] _ in
         self?.imageView.image = self?.viewModel.moviePosterImage
       }
       .store(in: &bindings)

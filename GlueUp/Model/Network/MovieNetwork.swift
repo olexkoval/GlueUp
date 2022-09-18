@@ -20,11 +20,15 @@ protocol MovieNetwork {
 }
 
 protocol MoviePosterLoader {
-  func loadMoviePosterImage(movie: MovieItemDTO) -> AnyPublisher<UIImage, Error>
+  func loadMoviePosterImage(movie: MovieItemDTO) -> AnyPublisher<UIImage, MovieNetworkError>
 }
 
 
-final class MovieNetworkImpl: MovieNetwork {
+final class MovieNetworkImpl {
+  let imageCache = NSCache<NSString, AnyObject>()
+}
+
+extension MovieNetworkImpl: MovieNetwork {
   
   func load(page: Int) -> AnyPublisher<[MovieItemDTO], MovieNetworkError> {
     var dataTask: URLSessionDataTask?
@@ -60,26 +64,37 @@ final class MovieNetworkImpl: MovieNetwork {
 }
 
 extension MovieNetworkImpl: MoviePosterLoader {
-  func loadMoviePosterImage(movie: MovieItemDTO) -> AnyPublisher<UIImage, Error> {
+  func loadMoviePosterImage(movie: MovieItemDTO) -> AnyPublisher<UIImage, MovieNetworkError> {
     var dataTask: URLSessionDataTask?
     
     let onSubscription: (Subscription) -> Void = { _ in dataTask?.resume() }
     let onCancel: () -> Void = { dataTask?.cancel() }
     
-    return Future<UIImage, Error> { [weak self] promise in
+    return Future<UIImage, MovieNetworkError> { [weak self] promise in
       guard let urlRequest = self?.getMoviePosterUrlRequest(posterId: movie.posterPath) else {
         promise(.failure(MovieNetworkError.urlRequest))
         return
       }
       
-      dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+      if let cachedImage = self?.imageCache.object(forKey: urlRequest.url!.absoluteString as NSString) as? UIImage {
+        promise(.success(cachedImage))
+        return
+      }
+      
+      dataTask = URLSession.shared.dataTask(with: urlRequest) { [weak self] (data, response, error) in
         guard let data = data else {
           if let error = error {
             promise(.failure(MovieNetworkError.url(error)))
           }
           return
         }
-        promise(.success(UIImage(data: data) ?? UIImage()))
+        if let image = UIImage(data: data) {
+          self?.imageCache.setObject(image, forKey: response!.url!.absoluteString as NSString)
+          promise(.success(image))
+
+        } else {
+          promise(.failure(MovieNetworkError.decode))
+        }
 
       }
     }
