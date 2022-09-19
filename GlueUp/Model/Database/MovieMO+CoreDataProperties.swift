@@ -20,7 +20,7 @@ extension MovieMO {
   @NSManaged public var releaseDate: Date
   @NSManaged public var voteCount: Int32
   @NSManaged public var overview: String
-  @NSManaged public var page: Int
+  @NSManaged public var page: Int16
   @NSManaged public var posterPath: String
 
 }

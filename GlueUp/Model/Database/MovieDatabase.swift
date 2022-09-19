@@ -35,9 +35,13 @@ final class MovieDatabaseImpl {
 extension MovieDatabaseImpl: MovieDatabase {
   
   func save(dtos: [MovieItemDTO], translation: MovieTranslation, page: Int) -> AnyPublisher<[MovieMO], NSError> {
-    _ = translation.createMovies(from: dtos, page: page, with: backgroundContext)
-    try! backgroundContext.save()
-    
+    backgroundContext.perform { [weak self] in
+      guard let self = self else { return }
+      
+      let movies = translation.createMovies(from: dtos, page: page, with: self.backgroundContext)
+      movies.forEach { self.backgroundContext.insert($0) }
+      try! self.backgroundContext.save()
+    }
     return FetchedResultsPublisher(request: fetchRequest, context: mainContext).eraseToAnyPublisher()
   }
   
@@ -57,11 +61,12 @@ private extension MovieDatabaseImpl {
   }
   
   func clearAllResults() {
-    let fetchRequest: NSFetchRequest<NSFetchRequestResult> = MovieMO.fetchRequest()
-    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-    
-    try! persistentContainer.persistentStoreCoordinator.execute(deleteRequest, with: backgroundContext)
-    backgroundContext.reset()
+    backgroundContext.perform { [weak self] in
+      let fetchRequest: NSFetchRequest<NSFetchRequestResult> = MovieMO.fetchRequest()
+      let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+      try! self?.backgroundContext.execute(deleteRequest)
+      try! self?.backgroundContext.save()
+    }
   }
   
   var fetchRequest: NSFetchRequest<MovieMO> {

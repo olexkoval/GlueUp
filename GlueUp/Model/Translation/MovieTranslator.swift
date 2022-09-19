@@ -38,7 +38,7 @@ final class MovieTranslatorImpl: MovieTranslator {
     movie.overview = dto.overview
     movie.posterPath = dto.posterPath
 
-    movie.page = page
+    movie.page = Int16(page)
     
     return movie
   }

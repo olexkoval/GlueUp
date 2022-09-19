@@ -77,8 +77,6 @@ private extension MoviePosterLoaderImpl {
   struct C {
     static let httpMethod = "GET"
     static let timeoutInterval: TimeInterval = 10.0
-    static let maxPagesCount = 1000
-    static let minPage = 1
     static let  moviePosterLoadingBaseURL = "://image.tmdb.org/t/p/w500/";
   }
 }

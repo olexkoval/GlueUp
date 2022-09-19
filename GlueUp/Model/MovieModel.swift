@@ -51,6 +51,7 @@ extension MovieModelImpl: MovieModel {
           case .failure(let networkError):
             promise(.failure(MovieModelError.networkError(networkError)))
           case .finished:
+            self.pageNumber += 1
             break
           }
         } receiveValue: { [unowned self] movieDTOs in
@@ -63,8 +64,9 @@ extension MovieModelImpl: MovieModel {
                 break
               }
             } receiveValue: { [unowned self] movies in
-              self.pageNumber += 1
-              promise(.success(self.translation.getMovieDTOs(from: movies)))
+              if movies.count > 0 {
+                promise(.success(self.translation.getMovieDTOs(from: movies)))
+              }
             }.store(in: &bindings)
         }.store(in: &bindings)
     }.eraseToAnyPublisher()

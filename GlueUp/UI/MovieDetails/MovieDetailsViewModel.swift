@@ -57,15 +57,9 @@ extension MovieDetailsViewModelImpl: MovieDetailsViewModel {
   
   var title: String { movie.title }
       
-  var voteCount: String {
-    "Votes Count: \(movie.voteCount)"
-  }
+  var voteCount: String { "Votes Count: \(movie.voteCount)" }
   
-  var releaseDate: String {
-    "Release Date: \(DateFormatter.sting(movie.releaseDate))"
-  }
+  var releaseDate: String { "Release Date: \(DateFormatter.sting(movie.releaseDate))" }
   
-  var overview: String {
-    "Overview:\n\(movie.overview)"
-  }
+  var overview: String { "\(movie.overview)" }
 }
