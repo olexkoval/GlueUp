@@ -41,6 +41,8 @@ final class MovieListViewModelImpl {
   init(model: MovieModel, errorHandler: MovieErrorHandler) {
     self.model = model
     self.errorHandler = errorHandler
+    
+    setupBindings()
   }
 }
 
@@ -56,6 +58,21 @@ extension MovieListViewModelImpl: MovieListViewModel {
     if state == .loading { return }
     
     state = .loading
+    model.loadNextPage()
+  }
+  
+  func loadPersitentData() {
+    movies = model.loadPesistentData()
+  }
+  
+  func reloadData() {
+    model.reloadData()
+    loadNextPage()
+  }
+}
+
+private extension MovieListViewModelImpl {
+  func setupBindings() {
     
     let loadMoviesCompletionHandler: (Subscribers.Completion<MovieModelError>) -> Void = { [weak self] completion in
       guard let self = self else { return }
@@ -69,27 +86,11 @@ extension MovieListViewModelImpl: MovieListViewModel {
     
     let loadMoviesValueHandler: ([MovieItemDTO]) -> Void = { [weak self] movies in
       self?.movies = movies
+      self?.state = .finishedLoading
     }
     
-    model.loadNextPage()
+    model.publisher.receive(on: RunLoop.main)
       .sink(receiveCompletion: loadMoviesCompletionHandler, receiveValue: loadMoviesValueHandler)
-      .store(in: &bindings)
-  }
-  
-  func loadPersitentData() {
-    movies = model.loadPesistentData()
-  }
-  
-  func reloadData() {
-    model.reloadData().sink { [unowned self] completion in
-      switch completion {
-      case .failure(_):
-        //TODO: Handle
-        break
-      case .finished:
-        loadNextPage()
-      }
-    } receiveValue: { _ in }
       .store(in: &bindings)
   }
 }

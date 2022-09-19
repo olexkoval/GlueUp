@@ -14,8 +14,9 @@ enum MovieModelError: Error {
 }
 
 protocol MovieModel {
-  func loadNextPage() -> AnyPublisher<[MovieItemDTO], MovieModelError>
-  func reloadData() -> AnyPublisher<[MovieItemDTO], MovieModelError>
+  var publisher: AnyPublisher<[MovieItemDTO], MovieModelError> { get }
+  func loadNextPage()
+  func reloadData()
   func loadPesistentData() -> [MovieItemDTO]
   var pageNumber: Int { get }
 }
@@ -27,70 +28,74 @@ final class MovieModelImpl {
   
   private var bindings = Set<AnyCancellable>()
   
+  private let subject = PassthroughSubject<[MovieItemDTO], MovieModelError>()
+  
   @Published private(set) var movies: [MovieItemDTO] = []
   
   init(network: MovieNetwork, translation: MovieTranslation, database: MovieDatabase) {
     self.network = network
     self.translation = translation
     self.database = database
+    
+    setupBindings()
   }
 }
 
 extension MovieModelImpl: MovieModel {
+  
+  var publisher: AnyPublisher<[MovieItemDTO], MovieModelError> {
+    subject.eraseToAnyPublisher()
+  }
   
   private(set) var pageNumber: Int {
     get { UserDefaults.standard.integer(forKey: C.pageNumberUserDefaultsKey) }
     set { UserDefaults.standard.set(newValue, forKey: C.pageNumberUserDefaultsKey) }
   }
   
-  func loadNextPage() -> AnyPublisher<[MovieItemDTO], MovieModelError> {
-    return Future<[MovieItemDTO], MovieModelError> { [unowned self] promise in
-      self.network.load(page: self.pageNumber + 1)
-        .sink { networkCompletion in
-          switch networkCompletion {
-          case .failure(let networkError):
-            promise(.failure(MovieModelError.networkError(networkError)))
-          case .finished:
-            self.pageNumber += 1
-            break
-          }
-        } receiveValue: { [unowned self] movieDTOs in
-          self.database.save(dtos: movieDTOs, translation: self.translation, page: self.pageNumber)
-            .sink { databaseCompletion in
-              switch databaseCompletion {
-              case .failure(let databaseError):
-                promise(.failure(MovieModelError.databaseError(databaseError)))
-              case .finished:
-                break
-              }
-            } receiveValue: { [unowned self] movies in
-              if movies.count > 0 {
-                promise(.success(self.translation.getMovieDTOs(from: movies)))
-              }
-            }.store(in: &bindings)
-        }.store(in: &bindings)
-    }.eraseToAnyPublisher()
+  func loadNextPage() {
+    network.load(page: pageNumber)
+      .sink { [weak self] networkCompletion in
+        guard let self = self else { return }
+        switch networkCompletion {
+        case .failure(let networkError):
+          self.subject.send(completion: .failure(.networkError(networkError)))
+        case .finished:
+          break
+        }
+        
+      } receiveValue: { [weak self] movies in
+        guard let self = self else { return }
+        self.database.save(dtos: movies, translation: self.translation, page: self.pageNumber)
+        self.pageNumber += 1
+      }.store(in: &bindings)
   }
   
-  func reloadData() -> AnyPublisher<[MovieItemDTO], MovieModelError> {
-    return Future<[MovieItemDTO], MovieModelError> { [unowned self] promise in
-      self.database.reset()
-        .sink { resetCompletion in
-          switch resetCompletion {
-          case .failure(let databaseError):
-            promise(.failure(MovieModelError.databaseError(databaseError)))
-          case .finished:
-            break
-          }
-        } receiveValue: { [unowned self] movies in
-          self.pageNumber = 0
-          promise(.success(self.translation.getMovieDTOs(from: movies)))
-        }.store(in: &bindings)
-    }.eraseToAnyPublisher()
+  func reloadData() {
+    self.database.reset()
+    pageNumber = 0
   }
   
   func loadPesistentData() -> [MovieItemDTO] {
     translation.getMovieDTOs(from: database.fetchAllMovies())
+  }
+}
+
+private extension MovieModelImpl {
+  func setupBindings() {
+    self.database.publisher.sink { [weak self] databaseCompletion in
+      guard let self = self else { return }
+
+      switch databaseCompletion {
+      case .finished:
+        break
+      case .failure(let dbError):
+        self.subject.send(completion: .failure(.databaseError(dbError)))
+      }
+    } receiveValue: { [weak self] movies in
+      guard let self = self else { return }
+
+      self.subject.send(self.translation.getMovieDTOs(from: movies))
+    }.store(in: &bindings)
   }
 }
 

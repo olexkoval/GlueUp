@@ -49,12 +49,14 @@ final class MovieListViewController: UITableViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    if viewModel.hasLoadedData && !initialDataRequested {
-      viewModel.loadPersitentData()
-    } else {
-      startLoading(with: { viewModel.loadNextPage() })
+    if !initialDataRequested {
+      if viewModel.hasLoadedData {
+        viewModel.loadPersitentData()
+      } else {
+        startLoading(with: { viewModel.loadNextPage() })
+      }
+      initialDataRequested = true
     }
-    initialDataRequested = true
   }
   
   override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -103,9 +105,7 @@ final class MovieListViewController: UITableViewController {
   }
   
   private func tableLastItemReached() {
-    if viewModel.hasLoadedData {
-      startLoading(with: { viewModel.loadNextPage() })
-    }
+    startLoading(with: { viewModel.loadNextPage() })
   }
   
   private func startLoading(with action:(() -> Void)) {

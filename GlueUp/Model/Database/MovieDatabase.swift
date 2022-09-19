@@ -10,9 +10,11 @@ import CoreData
 import Combine
 
 protocol MovieDatabase {
-  func save(dtos: [MovieItemDTO], translation: MovieTranslation, page: Int) -> AnyPublisher<[MovieMO], NSError>
-  func reset() -> AnyPublisher<[MovieMO], NSError>
+  func save(dtos: [MovieItemDTO], translation: MovieTranslation, page: Int)
+  func reset()
   func fetchAllMovies() -> [MovieMO]
+  
+  var publisher: AnyPublisher<[MovieMO], NSError> { get }
 }
 
 final class MovieDatabaseImpl {
@@ -34,7 +36,11 @@ final class MovieDatabaseImpl {
 
 extension MovieDatabaseImpl: MovieDatabase {
   
-  func save(dtos: [MovieItemDTO], translation: MovieTranslation, page: Int) -> AnyPublisher<[MovieMO], NSError> {
+  var publisher: AnyPublisher<[MovieMO], NSError> {
+    FetchedResultsPublisher(request: fetchRequest, context: mainContext).eraseToAnyPublisher()
+  }
+  
+  func save(dtos: [MovieItemDTO], translation: MovieTranslation, page: Int) {
     backgroundContext.perform { [weak self] in
       guard let self = self else { return }
       
@@ -42,12 +48,16 @@ extension MovieDatabaseImpl: MovieDatabase {
       movies.forEach { self.backgroundContext.insert($0) }
       try! self.backgroundContext.save()
     }
-    return FetchedResultsPublisher(request: fetchRequest, context: mainContext).eraseToAnyPublisher()
   }
   
-  func reset() -> AnyPublisher<[MovieMO], NSError> {
-    clearAllResults()
-    return FetchedResultsPublisher(request: fetchRequest, context: mainContext).eraseToAnyPublisher()
+  func reset() {
+    backgroundContext.perform { [weak self] in
+      guard let self = self else { return }
+      
+      let moviesToRemove = try! self.backgroundContext.fetch(self.fetchRequest)
+      moviesToRemove.forEach { self.backgroundContext.delete($0) }
+      try! self.backgroundContext.save()
+    }
   }
   
   func fetchAllMovies() -> [MovieMO] {
@@ -58,15 +68,6 @@ extension MovieDatabaseImpl: MovieDatabase {
 private extension MovieDatabaseImpl {
   var mainContext: NSManagedObjectContext {
     persistentContainer.viewContext
-  }
-  
-  func clearAllResults() {
-    backgroundContext.perform { [weak self] in
-      let fetchRequest: NSFetchRequest<NSFetchRequestResult> = MovieMO.fetchRequest()
-      let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-      try! self?.backgroundContext.execute(deleteRequest)
-      try! self?.backgroundContext.save()
-    }
   }
   
   var fetchRequest: NSFetchRequest<MovieMO> {
