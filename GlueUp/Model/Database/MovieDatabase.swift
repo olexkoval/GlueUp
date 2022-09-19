@@ -46,14 +46,7 @@ extension MovieDatabaseImpl: MovieDatabase {
   }
   
   func reset() -> AnyPublisher<[MovieMO], NSError> {
-
-    backgroundContext.perform { [weak self] in
-      guard let self = self else { return }
-      
-      let moviesToRemove = try! self.backgroundContext.fetch(self.fetchRequest)
-      moviesToRemove.forEach { self.backgroundContext.delete($0) }
-      try! self.backgroundContext.save()
-    }
+    clearAllResults()
     return FetchedResultsPublisher(request: fetchRequest, context: mainContext).eraseToAnyPublisher()
   }
   
@@ -65,6 +58,15 @@ extension MovieDatabaseImpl: MovieDatabase {
 private extension MovieDatabaseImpl {
   var mainContext: NSManagedObjectContext {
     persistentContainer.viewContext
+  }
+  
+  func clearAllResults() {
+    backgroundContext.perform { [weak self] in
+      let fetchRequest: NSFetchRequest<NSFetchRequestResult> = MovieMO.fetchRequest()
+      let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+      try! self?.backgroundContext.execute(deleteRequest)
+      try! self?.backgroundContext.save()
+    }
   }
   
   var fetchRequest: NSFetchRequest<MovieMO> {

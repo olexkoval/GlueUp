@@ -44,12 +44,10 @@ extension MovieModelImpl: MovieModel {
   }
   
   func loadNextPage() -> AnyPublisher<[MovieItemDTO], MovieModelError> {
-
     return Future<[MovieItemDTO], MovieModelError> { [unowned self] promise in
-      self.network.load(page: self.pageNumber)
+      self.network.load(page: self.pageNumber + 1)
         .sink { networkCompletion in
           switch networkCompletion {
-
           case .failure(let networkError):
             promise(.failure(MovieModelError.networkError(networkError)))
           case .finished:
@@ -57,29 +55,26 @@ extension MovieModelImpl: MovieModel {
             break
           }
         } receiveValue: { [unowned self] movieDTOs in
-
-          var dbSubscription: AnyCancellable?
-          dbSubscription = self.database.save(dtos: movieDTOs, translation: self.translation, page: self.pageNumber)
+          self.database.save(dtos: movieDTOs, translation: self.translation, page: self.pageNumber)
             .sink { databaseCompletion in
               switch databaseCompletion {
               case .failure(let databaseError):
                 promise(.failure(MovieModelError.databaseError(databaseError)))
               case .finished:
+                break
               }
             } receiveValue: { [unowned self] movies in
-              if movies.count == 0 { return }
-              dbSubscription?.cancel()
-              promise(.success(self.translation.getMovieDTOs(from: movies)))
-            }
-            dbSubscription?.store(in: &bindings)
+              if movies.count > 0 {
+                promise(.success(self.translation.getMovieDTOs(from: movies)))
+              }
+            }.store(in: &bindings)
         }.store(in: &bindings)
     }.eraseToAnyPublisher()
   }
   
   func reloadData() -> AnyPublisher<[MovieItemDTO], MovieModelError> {
     return Future<[MovieItemDTO], MovieModelError> { [unowned self] promise in
-      var dbSubscription: AnyCancellable?
-      dbSubscription = self.database.reset()
+      self.database.reset()
         .sink { resetCompletion in
           switch resetCompletion {
           case .failure(let databaseError):
@@ -88,11 +83,9 @@ extension MovieModelImpl: MovieModel {
             break
           }
         } receiveValue: { [unowned self] movies in
-          dbSubscription?.cancel()
           self.pageNumber = 0
-          promise(.success([MovieItemDTO]()))
-        }
-      dbSubscription?.store(in: &bindings)
+          promise(.success(self.translation.getMovieDTOs(from: movies)))
+        }.store(in: &bindings)
     }.eraseToAnyPublisher()
   }
   

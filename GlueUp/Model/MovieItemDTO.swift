@@ -11,7 +11,7 @@ struct MoviesData: Decodable {
   let results: [MovieItemDTO]
 }
 
-struct MovieItemDTO {
+struct MovieItemDTO: Equatable, Hashable, Decodable {
   let id: Int64
   let title: String
   let releaseDate: Date
@@ -20,22 +20,7 @@ struct MovieItemDTO {
   let posterPath: String
 }
 
-extension MovieItemDTO: Equatable {
-  static func ==(lhs: MovieItemDTO, rhs: MovieItemDTO) -> Bool { lhs.id == rhs.id }
-}
-
-extension MovieItemDTO: Hashable {
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
-    hasher.combine(title)
-    hasher.combine(releaseDate)
-    hasher.combine(voteCount)
-    hasher.combine(overview)
-    hasher.combine(posterPath)
-  }
-}
-
-extension MovieItemDTO: Decodable {
+extension MovieItemDTO {
   enum CodingKeys: String, CodingKey {
     case id
     case title
@@ -56,5 +41,4 @@ extension MovieItemDTO: Decodable {
     overview = try container.decode(String.self, forKey: .overview)
     posterPath = try container.decode(String.self, forKey: .poster_path)
   }
-  
 }
