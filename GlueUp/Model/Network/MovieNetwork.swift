@@ -78,7 +78,7 @@ private extension MovieNetworkImpl {
           var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else { return nil }
     
     let apiKeyQuery = URLQueryItem(name: C.apiKeyQuery, value: C.apiValueQuery)
-    let pageQuery = URLQueryItem(name: C.pageKeyQuery, value: String(page))
+    let pageQuery = URLQueryItem(name: C.pageKeyQuery, value: String(page + 1))
     
     components.queryItems = [apiKeyQuery, pageQuery]
     guard let url = components.url else { return nil }
@@ -96,7 +96,7 @@ private extension MovieNetworkImpl {
     static let pageKeyQuery = "page"
     static let httpMethod = "GET"
     static let timeoutInterval: TimeInterval = 10.0
-    static let maxPagesCount = 1000
-    static let minPage = 1
+    static let maxPagesCount = 999
+    static let minPage = 0
   }
 }

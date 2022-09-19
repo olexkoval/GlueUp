@@ -49,13 +49,14 @@ final class MovieListViewController: UITableViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    if viewModel.hasLoadedData && !initialDataRequested {
-      Logger.log("MovieListViewController", "loadPersitentData")
-      viewModel.loadPersitentData()
-    } else {
-      Logger.log("MovieListViewController", "loadNextPage")
-      startLoading(with: { viewModel.loadNextPage() })
+    if !initialDataRequested {
+      if viewModel.hasLoadedData {
+        viewModel.loadPersitentData()
+      } else {
+        startLoading(with: { viewModel.loadNextPage() })
+      }
     }
+    
     initialDataRequested = true
   }
   
@@ -109,11 +110,7 @@ final class MovieListViewController: UITableViewController {
   }
   
   private func tableLastItemReached() {
-    Logger.log("MovieListViewController", "tableLastItemReached")
-    if viewModel.hasLoadedData {
-      Logger.log("MovieListViewController", "loadNextPage")
-      startLoading(with: { viewModel.loadNextPage() })
-    }
+    startLoading(with: { viewModel.loadNextPage() })
   }
   
   private func startLoading(with action:(() -> Void)) {
