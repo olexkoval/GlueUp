@@ -50,8 +50,10 @@ final class MovieListViewController: UITableViewController {
     super.viewWillAppear(animated)
     
     if viewModel.hasLoadedData && !initialDataRequested {
+      Logger.log("MovieListViewController", "loadPersitentData")
       viewModel.loadPersitentData()
     } else {
+      Logger.log("MovieListViewController", "loadNextPage")
       startLoading(with: { viewModel.loadNextPage() })
     }
     initialDataRequested = true
@@ -80,6 +82,7 @@ final class MovieListViewController: UITableViewController {
     viewModel.moviesPublisher
       .receive(on: RunLoop.main)
       .sink(receiveValue: { [weak self] _ in
+        Logger.log("MovieListViewController", "moviesUpdated")
         self?.updateSections()
       })
       .store(in: &bindings)
@@ -87,10 +90,13 @@ final class MovieListViewController: UITableViewController {
     let stateValueHandler: (MovieListViewModelState) -> Void = { [weak self] state in
       switch state {
       case .loading:
+        Logger.log("MovieListViewController", "viewModel loading")
         self?.refreshControl?.beginRefreshing()
       case .finishedLoading:
+        Logger.log("MovieListViewController", "viewModel finishedLoading")
         self?.finishedLoading()
       case .error(let error):
+        Logger.log("MovieListViewController", "viewModel error \(error.localizedDescription)")
         self?.finishedLoading()
         self?.showError(error)
       }
@@ -103,7 +109,9 @@ final class MovieListViewController: UITableViewController {
   }
   
   private func tableLastItemReached() {
+    Logger.log("MovieListViewController", "tableLastItemReached")
     if viewModel.hasLoadedData {
+      Logger.log("MovieListViewController", "loadNextPage")
       startLoading(with: { viewModel.loadNextPage() })
     }
   }
@@ -127,6 +135,7 @@ final class MovieListViewController: UITableViewController {
   }
   
   @objc private func refresh() {
+    Logger.log("MovieListViewController", "refresh reloadData")
     startLoading(with: { viewModel.reloadData() })
   }
 }

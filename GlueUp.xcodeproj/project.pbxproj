@@ -30,6 +30,7 @@
 		4EC9212928D71C4100978F09 /* MovieErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9212828D71C4100978F09 /* MovieErrorHandler.swift */; };
 		4EDDD62F28D756CA000286F6 /* UIViewController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDD62E28D756CA000286F6 /* UIViewController+Error.swift */; };
 		4EDDD63128D79673000286F6 /* MoviePosterLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDD63028D79673000286F6 /* MoviePosterLoader.swift */; };
+		4EDDD63328D7D270000286F6 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDD63228D7D270000286F6 /* Logger.swift */; };
 		4EE17C0C28CA589100F3DE0B /* GlueUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE17C0B28CA589100F3DE0B /* GlueUpTests.swift */; };
 		4EE17C2D28CA732300F3DE0B /* GlueUp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4EE17C2528CA732300F3DE0B /* GlueUp.xcdatamodeld */; };
 		4EE17C2E28CA732300F3DE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EE17C2728CA732300F3DE0B /* Assets.xcassets */; };
@@ -71,6 +72,7 @@
 		4EC9212828D71C4100978F09 /* MovieErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieErrorHandler.swift; sourceTree = "<group>"; };
 		4EDDD62E28D756CA000286F6 /* UIViewController+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Error.swift"; sourceTree = "<group>"; };
 		4EDDD63028D79673000286F6 /* MoviePosterLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterLoader.swift; sourceTree = "<group>"; };
+		4EDDD63228D7D270000286F6 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		4EE17BEE28CA589000F3DE0B /* GlueUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlueUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EE17C0728CA589100F3DE0B /* GlueUpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlueUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EE17C0B28CA589100F3DE0B /* GlueUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlueUpTests.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				4EC920EB28D35C0700978F09 /* AppDelegate.swift */,
 				4EC920EC28D35C0700978F09 /* SceneDelegate.swift */,
+				4EDDD63228D7D270000286F6 /* Logger.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				4EC9212728D618EA00978F09 /* MovieDetailsViewModel.swift in Sources */,
 				4EC920FB28D363A100978F09 /* MovieNetwork.swift in Sources */,
 				4EC920FE28D36F1900978F09 /* MovieMO+CoreDataClass.swift in Sources */,
+				4EDDD63328D7D270000286F6 /* Logger.swift in Sources */,
 				4EC9211128D4932000978F09 /* MovieListViewController.swift in Sources */,
 				4EC920F928D3628900978F09 /* MovieItemDTO.swift in Sources */,
 				4EC9211F28D60CA900978F09 /* DependencyRegistry.swift in Sources */,

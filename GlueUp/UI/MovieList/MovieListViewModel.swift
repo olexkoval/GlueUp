@@ -52,7 +52,7 @@ extension MovieListViewModelImpl: MovieListViewModel {
   var loadingStatePublisher: Published<MovieListViewModelState>.Publisher { $state }
   
   func loadNextPage() {
-    
+    Logger.log("MovieListViewModelImpl", "loadNextPage s = \(state)")
     if state == .loading { return }
     
     state = .loading
@@ -62,12 +62,15 @@ extension MovieListViewModelImpl: MovieListViewModel {
       switch completion {
       case .failure(let modelError):
         self.state = .error(self.errorHandler.handleMovieFetch(error: modelError))
+        Logger.log("MovieListViewModelImpl", "loadNextPage failure \(self.errorHandler.handleMovieFetch(error: modelError))")
       case .finished:
         self.state = .finishedLoading
+        Logger.log("MovieListViewModelImpl", "loadNextPage finishedLoading")
       }
     }
     
     let loadMoviesValueHandler: ([MovieItemDTO]) -> Void = { [weak self] movies in
+      Logger.log("MovieListViewModelImpl", "received movies count = \(movies.count)")
       self?.movies = movies
     }
     
@@ -78,6 +81,7 @@ extension MovieListViewModelImpl: MovieListViewModel {
   
   func loadPersitentData() {
     movies = model.loadPesistentData()
+    Logger.log("MovieListViewModelImpl", "loadPersitentData movies count = \(movies.count)")
   }
   
   func reloadData() {

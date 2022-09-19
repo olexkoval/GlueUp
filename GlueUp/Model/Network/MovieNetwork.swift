@@ -24,6 +24,7 @@ final class MovieNetworkImpl {}
 extension MovieNetworkImpl: MovieNetwork {
   
   func load(page: Int) -> AnyPublisher<[MovieItemDTO], MovieNetworkError> {
+    Logger.log("MovieNetworkImpl", "load page \(page)")
     var dataTask: URLSessionDataTask?
     
     let onSubscription: (Subscription) -> Void = { _ in dataTask?.resume() }
@@ -34,18 +35,21 @@ extension MovieNetworkImpl: MovieNetwork {
         promise(.failure(MovieNetworkError.urlRequest))
         return
       }
-      
+      Logger.log("MovieNetworkImpl", "load dataTask created")
       dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
         guard let data = data else {
           if let error = error {
+            Logger.log("MovieNetworkImpl", "load dataTask failure \(error.localizedDescription)")
             promise(.failure(MovieNetworkError.url(error)))
           }
           return
         }
         do {
           let movies = try JSONDecoder().decode(MoviesData.self, from: data)
+          Logger.log("MovieNetworkImpl", "load dataTask success count = \(movies.results.count)")
           promise(.success(movies.results))
         } catch {
+          Logger.log("MovieNetworkImpl", "load dataTask failure decode")
           promise(.failure(MovieNetworkError.decode))
         }
       }
