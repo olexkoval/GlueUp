@@ -8,7 +8,7 @@
 
 protocol MovieDetailsViewModel: MovieItemViewModel {}
 
-class MovieDetailsViewModelImpl: MovieItemViewModelImpl, MovieDetailsViewModel {
+final class MovieDetailsViewModelImpl: MovieItemViewModelImpl, MovieDetailsViewModel {
   override var id: String { "ID: \(super.id)" }
   
   override var voteCount: String { "Votes Count: \(super.voteCount)" }
