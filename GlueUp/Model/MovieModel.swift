@@ -15,6 +15,8 @@ enum MovieModelError: Error {
 
 protocol MovieModel {
   var publisher: AnyPublisher<[MovieItemDTO], MovieModelError> { get }
+  
+  func resetPublisher()
   func loadNextPage()
   func reloadData()
   func loadPesistentData() -> [MovieItemDTO]
@@ -28,7 +30,7 @@ final class MovieModelImpl {
   
   private var bindings = Set<AnyCancellable>()
   
-  private let subject = PassthroughSubject<[MovieItemDTO], MovieModelError>()
+  private var subject = PassthroughSubject<[MovieItemDTO], MovieModelError>()
   
   @Published private(set) var movies: [MovieItemDTO] = []
   
@@ -42,6 +44,10 @@ final class MovieModelImpl {
 }
 
 extension MovieModelImpl: MovieModel {
+  
+  func resetPublisher() {
+    subject = PassthroughSubject<[MovieItemDTO], MovieModelError>()
+  }
   
   var publisher: AnyPublisher<[MovieItemDTO], MovieModelError> {
     subject.eraseToAnyPublisher()

@@ -62,6 +62,8 @@ class MovieDetailsViewController: UIViewController {
     }
     overviewLabel.numberOfLines = 0
     imageView.contentMode = .scaleAspectFit
+    titleLabel.numberOfLines = 0
+    titleLabel.textAlignment = .center
   }
   
   private func setupConstraints() {
@@ -69,7 +71,8 @@ class MovieDetailsViewController: UIViewController {
     NSLayoutConstraint.activate([
       titleLabel.topAnchor.constraint(equalTo: salg.topAnchor, constant: C.paddingOffset),
       titleLabel.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
-      
+      titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: salg.leadingAnchor, constant: C.paddingOffset),
+
       imageView.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
       imageView.bottomAnchor.constraint(equalTo: salg.centerYAnchor),
       imageView.leadingAnchor.constraint(greaterThanOrEqualTo: salg.leadingAnchor, constant: C.paddingOffset),

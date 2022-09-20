@@ -20,6 +20,7 @@ final class MovieListViewController: UITableViewController {
   private var bindings = Set<AnyCancellable>()  
   private var dataSource: MoviesDataSource!
   private var initialDataRequested = false
+  private var activityIndicator: UIActivityIndicatorView!
   
   init(viewModel: MovieListViewModel,
        navigationCoordinator: NavigationCoordinator?,
@@ -42,6 +43,8 @@ final class MovieListViewController: UITableViewController {
     super.viewDidLoad()
     
     tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
+    
+    configActivityIndicator()
     configRefreshControl()
     bindViewModelToView()
   }
@@ -78,6 +81,16 @@ final class MovieListViewController: UITableViewController {
     refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
   }
   
+  private func configActivityIndicator() {
+    activityIndicator = UIActivityIndicatorView(style: .large)
+    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+    self.view.addSubview(activityIndicator)
+    NSLayoutConstraint.activate([
+      activityIndicator.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+      activityIndicator.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor)
+    ])
+  }
+  
   private func bindViewModelToView() {
     viewModel.moviesPublisher
       .receive(on: RunLoop.main)
@@ -89,7 +102,9 @@ final class MovieListViewController: UITableViewController {
     let stateValueHandler: (MovieListViewModelState) -> Void = { [weak self] state in
       switch state {
       case .loading:
-        self?.refreshControl?.beginRefreshing()
+        if !(self?.refreshControl?.isRefreshing ?? false) {
+          self?.activityIndicator.startAnimating()
+        }
       case .finishedLoading:
         self?.finishedLoading()
       case .error(let error):
@@ -110,13 +125,16 @@ final class MovieListViewController: UITableViewController {
   
   private func startLoading(with action:(() -> Void)) {
     view.isUserInteractionEnabled = false
-    refreshControl?.beginRefreshing()
+    if !(refreshControl?.isRefreshing ?? false) {
+      activityIndicator.startAnimating()
+    }
     action()
   }
   
   private func finishedLoading() {
     view.isUserInteractionEnabled = true
     refreshControl?.endRefreshing()
+    activityIndicator.stopAnimating()
   }
   
   private func updateSections() {

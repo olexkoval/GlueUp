@@ -51,7 +51,6 @@ extension MovieNetworkImpl: MovieNetwork {
       }
     }
     .handleEvents(receiveSubscription: onSubscription, receiveCancel: onCancel)
-    .receive(on: DispatchQueue.main)
     .eraseToAnyPublisher()
   }
 }

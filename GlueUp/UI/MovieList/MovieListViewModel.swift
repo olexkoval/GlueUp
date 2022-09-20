@@ -37,6 +37,7 @@ final class MovieListViewModelImpl {
   private let errorHandler: MovieErrorHandler
 
   private var bindings = Set<AnyCancellable>()
+  private var subscription: AnyCancellable?
   
   init(model: MovieModel, errorHandler: MovieErrorHandler) {
     self.model = model
@@ -73,12 +74,15 @@ extension MovieListViewModelImpl: MovieListViewModel {
 
 private extension MovieListViewModelImpl {
   func setupBindings() {
+    subscription?.cancel()
     
     let loadMoviesCompletionHandler: (Subscribers.Completion<MovieModelError>) -> Void = { [weak self] completion in
       guard let self = self else { return }
       switch completion {
       case .failure(let modelError):
         self.state = .error(self.errorHandler.handleMovieFetch(error: modelError))
+        self.model.resetPublisher()
+        self.setupBindings()
       case .finished:
         self.state = .finishedLoading
       }
@@ -89,8 +93,9 @@ private extension MovieListViewModelImpl {
       self?.state = .finishedLoading
     }
     
-    model.publisher.receive(on: RunLoop.main)
+    subscription = model.publisher.receive(on: RunLoop.main)
       .sink(receiveCompletion: loadMoviesCompletionHandler, receiveValue: loadMoviesValueHandler)
-      .store(in: &bindings)
+    
+    subscription?.store(in: &bindings)
   }
 }
