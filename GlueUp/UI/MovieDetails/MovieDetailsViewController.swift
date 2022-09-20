@@ -73,21 +73,22 @@ class MovieDetailsViewController: UIViewController {
       titleLabel.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
       titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: salg.leadingAnchor, constant: C.paddingOffset),
       
+      imageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
       imageView.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
-      imageView.bottomAnchor.constraint(equalTo: salg.centerYAnchor),
+      imageView.bottomAnchor.constraint(greaterThanOrEqualTo: salg.centerYAnchor),
       imageView.leadingAnchor.constraint(greaterThanOrEqualTo: salg.leadingAnchor, constant: C.paddingOffset),
       imageView.heightAnchor.constraint(lessThanOrEqualToConstant: C.imageMaxHeight),
       
-      releaseDateLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: C.paddingOffset),
+      releaseDateLabel.topAnchor.constraint(greaterThanOrEqualTo: imageView.bottomAnchor, constant: C.paddingOffset),
       releaseDateLabel.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
       
-      idLabel.topAnchor.constraint(equalTo: releaseDateLabel.bottomAnchor, constant: C.paddingOffset),
+      idLabel.topAnchor.constraint(greaterThanOrEqualTo: releaseDateLabel.bottomAnchor, constant: C.paddingOffset),
       idLabel.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
       
-      voteCountLabel.topAnchor.constraint(equalTo: idLabel.bottomAnchor, constant: C.paddingOffset),
+      voteCountLabel.topAnchor.constraint(greaterThanOrEqualTo: idLabel.bottomAnchor, constant: C.paddingOffset),
       voteCountLabel.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
       
-      overviewLabel.topAnchor.constraint(equalTo: voteCountLabel.bottomAnchor, constant: C.paddingOffset),
+      overviewLabel.topAnchor.constraint(greaterThanOrEqualTo: voteCountLabel.bottomAnchor, constant: C.paddingOffset),
       overviewLabel.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
       salg.bottomAnchor.constraint(greaterThanOrEqualTo: overviewLabel.bottomAnchor, constant: 0),
 
