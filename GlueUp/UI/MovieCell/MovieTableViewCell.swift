@@ -26,6 +26,7 @@ final class MovieTableViewCell: UITableViewCell {
     super.prepareForReuse()
     
     viewModel = nil
+    imageView?.image = nil
   }
   
   required init?(coder: NSCoder) {
@@ -46,10 +47,12 @@ final class MovieTableViewCell: UITableViewCell {
     subscription?.cancel()
     subscription = viewModel?.moviePosterPublisher
       .receive(on: RunLoop.main)
-      .sink { _ in } receiveValue: { [weak self] _ in
-        self?.imageView?.image = self?.viewModel?.moviePosterImage
+      .sink { _ in } receiveValue: { [weak self] image in
+        if image.size != .zero {
+          self?.imageView?.image = image
+          self?.setNeedsLayout()
+        }
       }
-    
     subscription?.store(in: &bindings)
   }
 }
