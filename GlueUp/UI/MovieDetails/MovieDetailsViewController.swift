@@ -19,7 +19,7 @@ class MovieDetailsViewController: UIViewController {
   private lazy var voteCountLabel = UILabel()
   private lazy var releaseDateLabel = UILabel()
   private lazy var overviewLabel = UILabel()
-  private lazy var imageView: UIImageView = UIImageView()
+  private lazy var imageView = UIImageView()
 
   init(viewModel: MovieDetailsViewModel, navigationCoordinator: NavigationCoordinator) {
     self.viewModel = viewModel
@@ -92,7 +92,6 @@ class MovieDetailsViewController: UIViewController {
       overviewLabel.bottomAnchor.constraint(greaterThanOrEqualTo: salg.bottomAnchor, constant: -C.paddingOffset),
       overviewLabel.leadingAnchor.constraint(greaterThanOrEqualTo: salg.leadingAnchor, constant: C.paddingOffset)
     ])
-    
   }
   
   private func bindModelView() {
@@ -116,7 +115,6 @@ private extension MovieDetailsViewController {
   struct C {
     static let paddingOffset: CGFloat = 10.0
     static let imageMaxHeight: CGFloat = 300.0
-
   }
 }
 
