@@ -5,7 +5,6 @@
 //  Created by Oleksandr Koval on 15.09.2022.
 //
 
-import Foundation
 import CoreData
 
 protocol MovieTranslation {

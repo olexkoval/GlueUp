@@ -5,7 +5,6 @@
 //  Created by Oleksandr Koval on 17.09.2022.
 //
 
-import Foundation
 import Swinject
 
 protocol DependencyRegistry: AnyObject {
