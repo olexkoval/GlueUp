@@ -48,14 +48,14 @@ extension DependencyRegistryImpl: DependencyRegistry {
   func makeMovieCell(for tableView: UITableView, at indexPath: IndexPath, with movie: MovieItemDTO) -> MovieTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
     cell.viewModel = container.resolve(MovieCellViewModel.self, argument: movie)!
-
+    
     return cell
   }
   
   func makeMovieListViewController() -> MovieListViewController {
     container.resolve(MovieListViewController.self)!
   }
-
+  
   func makeMovieDetailsViewController(movie: MovieItemDTO) -> MovieDetailsViewController {
     container.resolve(MovieDetailsViewController.self, argument: movie)!
   }
@@ -74,7 +74,7 @@ private extension DependencyRegistryImpl {
     container.register(MovieTranslator.self) { _ in MovieTranslatorImpl() }.inObjectScope(.container)
     container.register(MovieCellMaker.self) { [unowned self] _ in self.makeMovieCell }.inObjectScope(.container)
     container.register(MoviePosterLoader.self) { _ in MoviePosterLoaderImpl() }.inObjectScope(.container)
-
+    
     container.register(MovieTranslation.self) { r in
       MovieTranslationImpl(translator: r.resolve(MovieTranslator.self)!)
     }.inObjectScope(.container)
@@ -101,15 +101,15 @@ private extension DependencyRegistryImpl {
       
       return MovieListViewController(viewModel: viewModel, navigationCoordinator: nil, movieCellMaker: movieCellMaker) }
     
-      .initCompleted{ r, vc in
-        vc.navigationCoordinator = r.resolve(NavigationCoordinator.self)!
+    .initCompleted{ r, vc in
+      vc.navigationCoordinator = r.resolve(NavigationCoordinator.self)!
     }
     
     container.register(MovieDetailsViewController.self) { (r, movie: MovieItemDTO) in
       
       let viewModel = r.resolve(MovieDetailsViewModel.self, argument: movie)!
       let navigationCoordinator = r.resolve(NavigationCoordinator.self)!
-
+      
       return MovieDetailsViewController(viewModel: viewModel, navigationCoordinator: navigationCoordinator)
     }
   }

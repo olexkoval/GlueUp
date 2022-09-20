@@ -19,7 +19,7 @@ final class MovieTableViewCell: UITableViewCell {
   private var subscription: AnyCancellable?
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    super.init(style: .default, reuseIdentifier: reuseIdentifier)
   }
   
   override func prepareForReuse() {

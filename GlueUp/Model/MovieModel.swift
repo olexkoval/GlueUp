@@ -98,19 +98,19 @@ private extension MovieModelImpl {
       self.database.publisher
         .receive(on: queue)
         .sink { [weak self] databaseCompletion in
-        guard let self = self else { return }
-
-        switch databaseCompletion {
-        case .finished:
-          break
-        case .failure(let dbError):
-          self.subject.send(completion: .failure(.databaseError(dbError)))
-        }
-      } receiveValue: { [weak self] movies in
-        guard let self = self else { return }
-
-        self.subject.send(self.translation.getMovieDTOs(from: movies))
-      }.store(in: &bindings)
+          guard let self = self else { return }
+          
+          switch databaseCompletion {
+          case .finished:
+            break
+          case .failure(let dbError):
+            self.subject.send(completion: .failure(.databaseError(dbError)))
+          }
+        } receiveValue: { [weak self] movies in
+          guard let self = self else { return }
+          
+          self.subject.send(self.translation.getMovieDTOs(from: movies))
+        }.store(in: &bindings)
     }
   }
 }

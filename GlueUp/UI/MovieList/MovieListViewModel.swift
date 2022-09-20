@@ -35,7 +35,7 @@ final class MovieListViewModelImpl {
   
   private let model: MovieModel
   private let errorHandler: MovieErrorHandler
-
+  
   private var bindings = Set<AnyCancellable>()
   private var subscription: AnyCancellable?
   

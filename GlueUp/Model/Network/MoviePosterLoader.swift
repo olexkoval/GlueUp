@@ -45,7 +45,7 @@ extension MoviePosterLoaderImpl: MoviePosterLoader {
         if let image = UIImage(data: data) {
           self?.imageCache.setObject(image, forKey: response!.url!.absoluteString as NSString)
           promise(.success(image))
-
+          
         } else {
           promise(.failure(MovieNetworkError.decode))
         }

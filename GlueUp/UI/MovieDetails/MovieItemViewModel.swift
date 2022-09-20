@@ -28,20 +28,20 @@ class MovieItemViewModelImpl {
   private let movie: MovieItemDTO
   private let moviePosterLoader: MoviePosterLoader
   private var bindings = Set<AnyCancellable>()
-
+  
   init(movie: MovieItemDTO, moviePosterLoader: MoviePosterLoader) {
     self.movie = movie
     self.moviePosterLoader = moviePosterLoader
   }
   
   var id: String { "\(movie.id)" }
-
+  
   var title: String { movie.title }
-      
+  
   var voteCount: String { "\(movie.voteCount)" }
-
+  
   var releaseDate: String { DateFormatter.sting(movie.releaseDate) }
-
+  
   var overview: String { movie.overview }
 }
 
@@ -60,6 +60,6 @@ extension MovieItemViewModelImpl: MovieItemViewModel {
         }
       } receiveValue: { [weak self] image in
         self?.moviePosterImage = image
-        }.store(in: &bindings)
+      }.store(in: &bindings)
   }
 }

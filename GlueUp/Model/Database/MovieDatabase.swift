@@ -73,7 +73,7 @@ private extension MovieDatabaseImpl {
   var fetchRequest: NSFetchRequest<MovieMO> {
     let sortOnId = NSSortDescriptor(key: "id", ascending: true)
     let sortOnPage = NSSortDescriptor(key: "page", ascending: true)
-
+    
     let fetchRequest = MovieMO.fetchRequest()
     fetchRequest.sortDescriptors = [sortOnPage, sortOnId]
     

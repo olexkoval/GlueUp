@@ -52,7 +52,7 @@ final class NavigationCoordinatorImpl: NavigationCoordinator {
   private func showDetails(arguments: Dictionary<String, Any>?) {
     guard let movie = arguments?["movie"] as? MovieItemDTO,
           let detailViewController = registry?.makeMovieDetailsViewController(movie: movie) else { return }
-        
+    
     rootViewController.navigationController?.pushViewController(detailViewController, animated: true)
     navState = .atMovieDetails
   }

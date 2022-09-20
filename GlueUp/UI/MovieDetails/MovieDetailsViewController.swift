@@ -13,14 +13,14 @@ class MovieDetailsViewController: UIViewController {
   private weak var navigationCoordinator: NavigationCoordinator?
   
   private var bindings = Set<AnyCancellable>()
-
+  
   private lazy var idLabel = UILabel()
   private lazy var titleLabel = UILabel()
   private lazy var voteCountLabel = UILabel()
   private lazy var releaseDateLabel = UILabel()
   private lazy var overviewLabel = UILabel()
   private lazy var imageView = UIImageView()
-
+  
   init(viewModel: MovieDetailsViewModel, navigationCoordinator: NavigationCoordinator) {
     self.viewModel = viewModel
     self.navigationCoordinator = navigationCoordinator
@@ -50,9 +50,9 @@ class MovieDetailsViewController: UIViewController {
   }
   
   override func viewWillDisappear(_ animated: Bool) {
-      super.viewWillDisappear(animated)
-      
-      navigationCoordinator?.movingBack()
+    super.viewWillDisappear(animated)
+    
+    navigationCoordinator?.movingBack()
   }
   
   private func setupSubviews() {
@@ -72,7 +72,7 @@ class MovieDetailsViewController: UIViewController {
       titleLabel.topAnchor.constraint(equalTo: salg.topAnchor, constant: C.paddingOffset),
       titleLabel.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
       titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: salg.leadingAnchor, constant: C.paddingOffset),
-
+      
       imageView.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
       imageView.bottomAnchor.constraint(equalTo: salg.centerYAnchor),
       imageView.leadingAnchor.constraint(greaterThanOrEqualTo: salg.leadingAnchor, constant: C.paddingOffset),

@@ -84,7 +84,7 @@ final class MovieListViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     guard let cell = cell as? MovieTableViewCell else { return }
-
+    
     cell.didDisappear()
   }
   
