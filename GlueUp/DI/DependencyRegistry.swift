@@ -89,7 +89,7 @@ private extension DependencyRegistryImpl {
   func registerViewModels() {
     container.register(MovieListViewModel.self) { r in MovieListViewModelImpl(model: r.resolve(MovieModel.self)!, errorHandler: r.resolve(MovieErrorHandler.self)!) }
     container.register( MovieDetailsViewModel.self) { (r, movie: MovieItemDTO) in MovieDetailsViewModelImpl(movie: movie, moviePosterLoader: r.resolve(MoviePosterLoader.self)!) }
-    container.register(MovieCellViewModel.self) { (r, movie: MovieItemDTO) in MovieCellViewModelImpl(movie: movie) }
+    container.register(MovieCellViewModel.self) { (r, movie: MovieItemDTO) in MovieCellViewModelImpl(movie: movie, moviePosterLoader: r.resolve(MoviePosterLoader.self)!) }
   }
   
   func registerViewControllers() {

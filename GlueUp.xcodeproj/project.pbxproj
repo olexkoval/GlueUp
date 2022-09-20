@@ -28,6 +28,7 @@
 		4EC9212528D618D600978F09 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9212428D618D600978F09 /* MovieDetailsViewController.swift */; };
 		4EC9212728D618EA00978F09 /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9212628D618EA00978F09 /* MovieDetailsViewModel.swift */; };
 		4EC9212928D71C4100978F09 /* MovieErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC9212828D71C4100978F09 /* MovieErrorHandler.swift */; };
+		4EDDAD8128D94EEC00A842AD /* MovieItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDAD8028D94EEC00A842AD /* MovieItemViewModel.swift */; };
 		4EDDD62F28D756CA000286F6 /* UIViewController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDD62E28D756CA000286F6 /* UIViewController+Error.swift */; };
 		4EDDD63128D79673000286F6 /* MoviePosterLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDD63028D79673000286F6 /* MoviePosterLoader.swift */; };
 		4EE17C0C28CA589100F3DE0B /* GlueUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE17C0B28CA589100F3DE0B /* GlueUpTests.swift */; };
@@ -69,6 +70,7 @@
 		4EC9212428D618D600978F09 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		4EC9212628D618EA00978F09 /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
 		4EC9212828D71C4100978F09 /* MovieErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieErrorHandler.swift; sourceTree = "<group>"; };
+		4EDDAD8028D94EEC00A842AD /* MovieItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieItemViewModel.swift; sourceTree = "<group>"; };
 		4EDDD62E28D756CA000286F6 /* UIViewController+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Error.swift"; sourceTree = "<group>"; };
 		4EDDD63028D79673000286F6 /* MoviePosterLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterLoader.swift; sourceTree = "<group>"; };
 		4EE17BEE28CA589000F3DE0B /* GlueUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlueUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -220,6 +222,7 @@
 			children = (
 				4EC9212428D618D600978F09 /* MovieDetailsViewController.swift */,
 				4EC9212628D618EA00978F09 /* MovieDetailsViewModel.swift */,
+				4EDDAD8028D94EEC00A842AD /* MovieItemViewModel.swift */,
 			);
 			path = MovieDetails;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				4EC9212528D618D600978F09 /* MovieDetailsViewController.swift in Sources */,
 				4EC9210528D37E4200978F09 /* MovieModel.swift in Sources */,
 				4EC920F028D35C0800978F09 /* AppDelegate.swift in Sources */,
+				4EDDAD8128D94EEC00A842AD /* MovieItemViewModel.swift in Sources */,
 				4EC9212228D60D2700978F09 /* NavigationCoordinator.swift in Sources */,
 				4EC9211C28D5E07400978F09 /* DateFormatter+String.swift in Sources */,
 				4EC9210328D3701600978F09 /* MovieTranslator.swift in Sources */,

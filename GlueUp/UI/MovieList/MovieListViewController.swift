@@ -76,6 +76,18 @@ final class MovieListViewController: UITableViewController {
     navigationCoordinator?.next(arguments: args)
   }
   
+  override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard let cell = cell as? MovieTableViewCell else { return }
+    
+    cell.willAppear()
+  }
+  
+  override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard let cell = cell as? MovieTableViewCell else { return }
+
+    cell.didDisappear()
+  }
+  
   private func configRefreshControl() {
     refreshControl = UIRefreshControl()
     refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)

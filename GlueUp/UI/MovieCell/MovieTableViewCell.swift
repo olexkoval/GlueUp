@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class MovieTableViewCell: UITableViewCell {
   static let identifier = "MovieTableViewCell"
@@ -13,6 +14,9 @@ final class MovieTableViewCell: UITableViewCell {
   var viewModel: MovieCellViewModel? {
     didSet { setUpViewModel() }
   }
+  
+  private var bindings = Set<AnyCancellable>()
+  private var subscription: AnyCancellable?
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -28,8 +32,24 @@ final class MovieTableViewCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
+  func willAppear() {
+    viewModel?.loadMoviePosterImage()
+  }
+  
+  func didDisappear() {
+    subscription?.cancel()
+  }
+  
   private func setUpViewModel() {
     textLabel?.text = viewModel?.movieTitle
-    detailTextLabel?.text = viewModel?.movieDescription
+    
+    subscription?.cancel()
+    subscription = viewModel?.moviePosterPublisher
+      .receive(on: RunLoop.main)
+      .sink { _ in } receiveValue: { [weak self] _ in
+        self?.imageView?.image = self?.viewModel?.moviePosterImage
+      }
+    
+    subscription?.store(in: &bindings)
   }
 }
