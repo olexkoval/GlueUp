@@ -89,7 +89,8 @@ class MovieDetailsViewController: UIViewController {
       
       overviewLabel.topAnchor.constraint(equalTo: voteCountLabel.bottomAnchor, constant: C.paddingOffset),
       overviewLabel.centerXAnchor.constraint(equalTo: salg.centerXAnchor),
-      overviewLabel.bottomAnchor.constraint(greaterThanOrEqualTo: salg.bottomAnchor, constant: -C.paddingOffset),
+      salg.bottomAnchor.constraint(greaterThanOrEqualTo: overviewLabel.bottomAnchor, constant: 0),
+
       overviewLabel.leadingAnchor.constraint(greaterThanOrEqualTo: salg.leadingAnchor, constant: C.paddingOffset)
     ])
   }
