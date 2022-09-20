@@ -11,9 +11,7 @@ import Combine
 final class MovieTableViewCell: UITableViewCell {
   static let identifier = "MovieTableViewCell"
   
-  var viewModel: MovieCellViewModel? {
-    didSet { setUpViewModel() }
-  }
+  var viewModel: MovieCellViewModel?
   
   private var bindings = Set<AnyCancellable>()
   private var subscription: AnyCancellable?
@@ -34,6 +32,7 @@ final class MovieTableViewCell: UITableViewCell {
   }
   
   func willAppear() {
+    setUpViewModel()
     viewModel?.loadMoviePosterImage()
   }
   
