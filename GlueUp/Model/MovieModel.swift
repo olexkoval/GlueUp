@@ -32,6 +32,8 @@ final class MovieModelImpl {
   
   private var subject = PassthroughSubject<[MovieItemDTO], MovieModelError>()
   
+  private let queue = DispatchQueue(label: "com.okoval.GlueUp.MovieModel.serialQueue")
+  
   @Published private(set) var movies: [MovieItemDTO] = []
   
   init(network: MovieNetwork, translation: MovieTranslation, database: MovieDatabase) {
@@ -59,26 +61,30 @@ extension MovieModelImpl: MovieModel {
   }
   
   func loadNextPage() {
-    network.load(page: pageNumber)
-      .sink { [weak self] networkCompletion in
-        guard let self = self else { return }
-        switch networkCompletion {
-        case .failure(let networkError):
-          self.subject.send(completion: .failure(.networkError(networkError)))
-        case .finished:
-          break
-        }
-        
-      } receiveValue: { [weak self] movies in
-        guard let self = self else { return }
-        self.database.save(dtos: movies, translation: self.translation, page: self.pageNumber)
-        self.pageNumber += 1
-      }.store(in: &bindings)
+    queue.async { [unowned self] in
+      self.network.load(page: pageNumber).receive(on: queue)
+        .sink { [weak self] networkCompletion in
+          guard let self = self else { return }
+          switch networkCompletion {
+          case .failure(let networkError):
+            self.subject.send(completion: .failure(.networkError(networkError)))
+          case .finished:
+            break
+          }
+          
+        } receiveValue: { [weak self] movies in
+          guard let self = self else { return }
+          self.database.save(dtos: movies, translation: self.translation, page: self.pageNumber)
+          self.pageNumber += 1
+        }.store(in: &bindings)
+    }
   }
   
   func reloadData() {
-    self.database.reset()
-    pageNumber = 0
+    queue.async { [unowned self] in
+      self.database.reset()
+      self.pageNumber = 0
+    }
   }
   
   func loadPesistentData() -> [MovieItemDTO] {
@@ -88,20 +94,24 @@ extension MovieModelImpl: MovieModel {
 
 private extension MovieModelImpl {
   func setupBindings() {
-    self.database.publisher.sink { [weak self] databaseCompletion in
-      guard let self = self else { return }
+    queue.async { [unowned self] in
+      self.database.publisher
+        .receive(on: queue)
+        .sink { [weak self] databaseCompletion in
+        guard let self = self else { return }
 
-      switch databaseCompletion {
-      case .finished:
-        break
-      case .failure(let dbError):
-        self.subject.send(completion: .failure(.databaseError(dbError)))
-      }
-    } receiveValue: { [weak self] movies in
-      guard let self = self else { return }
+        switch databaseCompletion {
+        case .finished:
+          break
+        case .failure(let dbError):
+          self.subject.send(completion: .failure(.databaseError(dbError)))
+        }
+      } receiveValue: { [weak self] movies in
+        guard let self = self else { return }
 
-      self.subject.send(self.translation.getMovieDTOs(from: movies))
-    }.store(in: &bindings)
+        self.subject.send(self.translation.getMovieDTOs(from: movies))
+      }.store(in: &bindings)
+    }
   }
 }
 
