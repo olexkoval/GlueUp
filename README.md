@@ -16,4 +16,4 @@ The app consists of the two screens:
 • Scroll to load more
 • Error handling
 
-# Swinject, Combine, CoreData, MVVM+C
+Swinject, Combine, CoreData, MVVM+C
