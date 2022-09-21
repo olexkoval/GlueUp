@@ -36,9 +36,7 @@ extension MoviePosterLoaderImpl: MoviePosterLoader {
       
       dataTask = URLSession.shared.dataTask(with: urlRequest) { [weak self] (data, response, error) in
         guard let data = data else {
-          if let error = error {
-            promise(.failure(MovieNetworkError.url(error)))
-          }
+          promise(.failure((error != nil) ? .url(error!) : .urlRequest))
           return
         }
         if let image = UIImage(data: data) {
@@ -46,12 +44,11 @@ extension MoviePosterLoaderImpl: MoviePosterLoader {
           promise(.success(image))
           
         } else {
-          promise(.failure(MovieNetworkError.decode))
+          promise(.failure(.decode))
         }
       }
     }
     .handleEvents(receiveSubscription: onSubscription, receiveCancel: onCancel)
-    .receive(on: DispatchQueue.main)
     .eraseToAnyPublisher()
   }
 }

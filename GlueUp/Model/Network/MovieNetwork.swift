@@ -36,9 +36,7 @@ extension MovieNetworkImpl: MovieNetwork {
       
       dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
         guard let data = data else {
-          if let error = error {
-            promise(.failure(MovieNetworkError.url(error)))
-          }
+          promise(.failure((error != nil) ? .url(error!) : .urlRequest))
           return
         }
         do {
