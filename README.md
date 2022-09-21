@@ -15,3 +15,5 @@ The app consists of the two screens:
 • Persist data locally
 • Scroll to load more
 • Error handling
+
+# Swinject, Combine, CoreData, MVVM+C
