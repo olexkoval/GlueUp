@@ -5,8 +5,8 @@
 //  Created by Oleksandr Koval on 15.09.2022.
 //
 
+import Foundation
 import Combine
-import JLTMDbClient
 
 enum MovieNetworkError: Error {
   case url(Error)
@@ -58,39 +58,24 @@ private extension MovieNetworkImpl {
   
   func getUrlRequest(page: Int) -> URLRequest? {
     
-    if page > C.maxPagesCount || page < C.minPage {
+    if page > TMDBConstants.maxPagesCount || page < TMDBConstants.minPage {
       return nil
     }
     
-#if DEBUG
-    let scheme = kJLTMDbAPINoSSL
-#else
-    let scheme = kJLTMDbAPISSL
-#endif
-    let urlString = scheme + kJLTMDbAPIBaseURL + kJLTMDbAPIVersion + kJLTMDbMoviePopular
+    let urlString = TMDBConstants.apiScheme + TMDBConstants.apiBaseURL + TMDBConstants.apiVersion + TMDBConstants.apiPopularMovieQuery
     guard let baseURL = URL(string: urlString),
           var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else { return nil }
     
-    let apiKeyQuery = URLQueryItem(name: C.apiKeyQuery, value: C.apiValueQuery)
-    let pageQuery = URLQueryItem(name: C.pageKeyQuery, value: String(page + 1))
+    let apiKeyQuery = URLQueryItem(name: TMDBConstants.apiKeyQuery, value: TMDBConstants.apiValueQuery)
+    let pageQuery = URLQueryItem(name: TMDBConstants.pageKeyQuery, value: String(page + 1))
     
     components.queryItems = [apiKeyQuery, pageQuery]
     guard let url = components.url else { return nil }
     
     var urlRequest = URLRequest(url: url)
-    urlRequest.timeoutInterval = C.timeoutInterval
-    urlRequest.httpMethod = C.httpMethod
+    urlRequest.timeoutInterval = TMDBConstants.timeoutInterval
+    urlRequest.httpMethod = TMDBConstants.httpMethod
     
     return urlRequest
-  }
-  
-  struct C {
-    static let apiKeyQuery = "api_key"
-    static let apiValueQuery = "be1eec9f57f124cd1f0a9ad37ecfd4db"
-    static let pageKeyQuery = "page"
-    static let httpMethod = "GET"
-    static let timeoutInterval: TimeInterval = 10.0
-    static let maxPagesCount = 999
-    static let minPage = 0
   }
 }

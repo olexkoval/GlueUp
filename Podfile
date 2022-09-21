@@ -5,7 +5,6 @@ target 'GlueUp' do
   use_frameworks!
   inhibit_all_warnings!
 
-  pod 'JLTMDbClient', '~> 0.4'
   pod 'Swinject'
 
 end

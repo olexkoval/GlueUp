@@ -6,7 +6,7 @@
 //
 
 import Combine
-import JLTMDbClient
+import UIKit
 
 protocol MoviePosterLoader {
   func loadMoviePosterImage(movie: MovieItemDTO) -> AnyPublisher<UIImage, MovieNetworkError>
@@ -58,24 +58,13 @@ extension MoviePosterLoaderImpl: MoviePosterLoader {
 
 private extension MoviePosterLoaderImpl {
   func getMoviePosterUrlRequest(posterId: String) -> URLRequest? {
-#if DEBUG
-    let scheme = kJLTMDbAPINoSSL
-#else
-    let scheme = kJLTMDbAPISSL
-#endif
-    let urlString = scheme + C.moviePosterLoadingBaseURL + posterId
+    let urlString = TMDBConstants.apiScheme + TMDBConstants.apiPosterLoadingBaseURL + posterId
     guard let baseURL = URL(string: urlString) else { return nil }
     
     var urlRequest = URLRequest(url: baseURL)
-    urlRequest.timeoutInterval = C.timeoutInterval
-    urlRequest.httpMethod = C.httpMethod
+    urlRequest.timeoutInterval = TMDBConstants.timeoutInterval
+    urlRequest.httpMethod = TMDBConstants.httpMethod
     
     return urlRequest
-  }
-  
-  struct C {
-    static let httpMethod = "GET"
-    static let timeoutInterval: TimeInterval = 10.0
-    static let  moviePosterLoadingBaseURL = "://image.tmdb.org/t/p/w500/";
   }
 }

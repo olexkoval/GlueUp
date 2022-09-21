@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4EB976CD28DB99F00007F10B /* TMDBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB976CC28DB99F00007F10B /* TMDBConstants.swift */; };
 		4EC920F028D35C0800978F09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC920EB28D35C0700978F09 /* AppDelegate.swift */; };
 		4EC920F128D35C0800978F09 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC920EC28D35C0700978F09 /* SceneDelegate.swift */; };
 		4EC920F728D3617200978F09 /* MovieDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC920F628D3617200978F09 /* MovieDatabase.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4EB976CC28DB99F00007F10B /* TMDBConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBConstants.swift; sourceTree = "<group>"; };
 		4EC920EB28D35C0700978F09 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EC920EC28D35C0700978F09 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4EC920F628D3617200978F09 /* MovieDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDatabase.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			children = (
 				4EC920FA28D363A100978F09 /* MovieNetwork.swift */,
 				4EDDD63028D79673000286F6 /* MoviePosterLoader.swift */,
+				4EB976CC28DB99F00007F10B /* TMDBConstants.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				4EE17C2D28CA732300F3DE0B /* GlueUp.xcdatamodeld in Sources */,
 				4EC920FF28D36F1900978F09 /* MovieMO+CoreDataProperties.swift in Sources */,
 				4EC9212928D71C4100978F09 /* MovieErrorHandler.swift in Sources */,
+				4EB976CD28DB99F00007F10B /* TMDBConstants.swift in Sources */,
 				4EC9211728D5D1EB00978F09 /* MovieTableViewCell.swift in Sources */,
 				4EDDD62F28D756CA000286F6 /* UIViewController+Error.swift in Sources */,
 				4EC9211028D4932000978F09 /* MovieListViewModel.swift in Sources */,
