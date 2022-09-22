@@ -101,13 +101,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		01457A2597565297D056D0E3 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		4EC920EA28D35C0700978F09 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,7 +222,6 @@
 				4EE17BF028CA589000F3DE0B /* GlueUp */,
 				4EE17C0A28CA589100F3DE0B /* GlueUpTests */,
 				4EE17BEF28CA589000F3DE0B /* Products */,
-				01457A2597565297D056D0E3 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
