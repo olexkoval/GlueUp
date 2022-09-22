@@ -6,6 +6,7 @@
 //
 
 import Swinject
+import UIKit
 
 protocol DependencyRegistry: AnyObject {
   
