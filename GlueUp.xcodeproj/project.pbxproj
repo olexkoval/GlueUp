@@ -36,7 +36,6 @@
 		4EE17C2D28CA732300F3DE0B /* GlueUp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4EE17C2528CA732300F3DE0B /* GlueUp.xcdatamodeld */; };
 		4EE17C2E28CA732300F3DE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EE17C2728CA732300F3DE0B /* Assets.xcassets */; };
 		4EE17C2F28CA732300F3DE0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EE17C2828CA732300F3DE0B /* LaunchScreen.storyboard */; };
-		B129049495DF239479937A52 /* Pods_GlueUp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E96C9073D3F390E6B95D114C /* Pods_GlueUp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,9 +81,6 @@
 		4EE17C2728CA732300F3DE0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4EE17C2928CA732300F3DE0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4EE17C2C28CA732300F3DE0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6D70A06CD1339E0B78C6B89C /* Pods-GlueUp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlueUp.release.xcconfig"; path = "Target Support Files/Pods-GlueUp/Pods-GlueUp.release.xcconfig"; sourceTree = "<group>"; };
-		C91C3691766F06C4E84585AC /* Pods-GlueUp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlueUp.debug.xcconfig"; path = "Target Support Files/Pods-GlueUp/Pods-GlueUp.debug.xcconfig"; sourceTree = "<group>"; };
-		E96C9073D3F390E6B95D114C /* Pods_GlueUp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GlueUp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +88,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B129049495DF239479937A52 /* Pods_GlueUp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,8 +104,6 @@
 		01457A2597565297D056D0E3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C91C3691766F06C4E84585AC /* Pods-GlueUp.debug.xcconfig */,
-				6D70A06CD1339E0B78C6B89C /* Pods-GlueUp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -237,7 +230,6 @@
 				4EE17C0A28CA589100F3DE0B /* GlueUpTests */,
 				4EE17BEF28CA589000F3DE0B /* Products */,
 				01457A2597565297D056D0E3 /* Pods */,
-				59A851B8DF288F9D5DA00D00 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -283,14 +275,6 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		59A851B8DF288F9D5DA00D00 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E96C9073D3F390E6B95D114C /* Pods_GlueUp.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -298,11 +282,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4EE17C1B28CA589100F3DE0B /* Build configuration list for PBXNativeTarget "GlueUp" */;
 			buildPhases = (
-				3B87B24FD82EB682D707C406 /* [CP] Check Pods Manifest.lock */,
 				4EE17BEA28CA589000F3DE0B /* Sources */,
 				4EE17BEB28CA589000F3DE0B /* Frameworks */,
 				4EE17BEC28CA589000F3DE0B /* Resources */,
-				EA5A8E1B2E2CB792AA8146BA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -387,48 +369,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3B87B24FD82EB682D707C406 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GlueUp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EA5A8E1B2E2CB792AA8146BA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GlueUp/Pods-GlueUp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GlueUp/Pods-GlueUp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GlueUp/Pods-GlueUp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4EE17BEA28CA589000F3DE0B /* Sources */ = {
@@ -610,7 +550,6 @@
 		};
 		4EE17C1C28CA589100F3DE0B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C91C3691766F06C4E84585AC /* Pods-GlueUp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -640,7 +579,6 @@
 		};
 		4EE17C1D28CA589100F3DE0B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6D70A06CD1339E0B78C6B89C /* Pods-GlueUp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
