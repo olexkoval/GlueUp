@@ -32,21 +32,10 @@
 		4EDDAD8128D94EEC00A842AD /* MovieItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDAD8028D94EEC00A842AD /* MovieItemViewModel.swift */; };
 		4EDDD62F28D756CA000286F6 /* UIViewController+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDD62E28D756CA000286F6 /* UIViewController+Error.swift */; };
 		4EDDD63128D79673000286F6 /* MoviePosterLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDDD63028D79673000286F6 /* MoviePosterLoader.swift */; };
-		4EE17C0C28CA589100F3DE0B /* GlueUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE17C0B28CA589100F3DE0B /* GlueUpTests.swift */; };
 		4EE17C2D28CA732300F3DE0B /* GlueUp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4EE17C2528CA732300F3DE0B /* GlueUp.xcdatamodeld */; };
 		4EE17C2E28CA732300F3DE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EE17C2728CA732300F3DE0B /* Assets.xcassets */; };
 		4EE17C2F28CA732300F3DE0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EE17C2828CA732300F3DE0B /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		4EE17C0828CA589100F3DE0B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4EE17BE628CA589000F3DE0B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4EE17BED28CA589000F3DE0B;
-			remoteInfo = GlueUp;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4EB976CC28DB99F00007F10B /* TMDBConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBConstants.swift; sourceTree = "<group>"; };
@@ -75,8 +64,6 @@
 		4EDDD62E28D756CA000286F6 /* UIViewController+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Error.swift"; sourceTree = "<group>"; };
 		4EDDD63028D79673000286F6 /* MoviePosterLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterLoader.swift; sourceTree = "<group>"; };
 		4EE17BEE28CA589000F3DE0B /* GlueUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlueUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EE17C0728CA589100F3DE0B /* GlueUpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlueUpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EE17C0B28CA589100F3DE0B /* GlueUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlueUpTests.swift; sourceTree = "<group>"; };
 		4EE17C2628CA732300F3DE0B /* GlueUp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GlueUp.xcdatamodel; sourceTree = "<group>"; };
 		4EE17C2728CA732300F3DE0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4EE17C2928CA732300F3DE0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -85,13 +72,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		4EE17BEB28CA589000F3DE0B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4EE17C0428CA589100F3DE0B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -220,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				4EE17BF028CA589000F3DE0B /* GlueUp */,
-				4EE17C0A28CA589100F3DE0B /* GlueUpTests */,
 				4EE17BEF28CA589000F3DE0B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -229,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				4EE17BEE28CA589000F3DE0B /* GlueUp.app */,
-				4EE17C0728CA589100F3DE0B /* GlueUpTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -246,14 +224,6 @@
 				4EE17C2428CA732300F3DE0B /* Supporting Files */,
 			);
 			path = GlueUp;
-			sourceTree = "<group>";
-		};
-		4EE17C0A28CA589100F3DE0B /* GlueUpTests */ = {
-			isa = PBXGroup;
-			children = (
-				4EE17C0B28CA589100F3DE0B /* GlueUpTests.swift */,
-			);
-			path = GlueUpTests;
 			sourceTree = "<group>";
 		};
 		4EE17C2428CA732300F3DE0B /* Supporting Files */ = {
@@ -287,24 +257,6 @@
 			productReference = 4EE17BEE28CA589000F3DE0B /* GlueUp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4EE17C0628CA589100F3DE0B /* GlueUpTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4EE17C1E28CA589100F3DE0B /* Build configuration list for PBXNativeTarget "GlueUpTests" */;
-			buildPhases = (
-				4EE17C0328CA589100F3DE0B /* Sources */,
-				4EE17C0428CA589100F3DE0B /* Frameworks */,
-				4EE17C0528CA589100F3DE0B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4EE17C0928CA589100F3DE0B /* PBXTargetDependency */,
-			);
-			name = GlueUpTests;
-			productName = GlueUpTests;
-			productReference = 4EE17C0728CA589100F3DE0B /* GlueUpTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -317,10 +269,6 @@
 				TargetAttributes = {
 					4EE17BED28CA589000F3DE0B = {
 						CreatedOnToolsVersion = 13.3.1;
-					};
-					4EE17C0628CA589100F3DE0B = {
-						CreatedOnToolsVersion = 13.3.1;
-						TestTargetID = 4EE17BED28CA589000F3DE0B;
 					};
 				};
 			};
@@ -338,7 +286,6 @@
 			projectRoot = "";
 			targets = (
 				4EE17BED28CA589000F3DE0B /* GlueUp */,
-				4EE17C0628CA589100F3DE0B /* GlueUpTests */,
 			);
 		};
 /* End PBXProject section */
@@ -350,13 +297,6 @@
 			files = (
 				4EE17C2F28CA732300F3DE0B /* LaunchScreen.storyboard in Resources */,
 				4EE17C2E28CA732300F3DE0B /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4EE17C0528CA589100F3DE0B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,23 +336,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4EE17C0328CA589100F3DE0B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4EE17C0C28CA589100F3DE0B /* GlueUpTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4EE17C0928CA589100F3DE0B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4EE17BED28CA589000F3DE0B /* GlueUp */;
-			targetProxy = 4EE17C0828CA589100F3DE0B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4EE17C2828CA732300F3DE0B /* LaunchScreen.storyboard */ = {
@@ -598,44 +522,6 @@
 			};
 			name = Release;
 		};
-		4EE17C1F28CA589100F3DE0B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.okoval.GlueUpTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlueUp.app/GlueUp";
-			};
-			name = Debug;
-		};
-		4EE17C2028CA589100F3DE0B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.okoval.GlueUpTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlueUp.app/GlueUp";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -653,15 +539,6 @@
 			buildConfigurations = (
 				4EE17C1C28CA589100F3DE0B /* Debug */,
 				4EE17C1D28CA589100F3DE0B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4EE17C1E28CA589100F3DE0B /* Build configuration list for PBXNativeTarget "GlueUpTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4EE17C1F28CA589100F3DE0B /* Debug */,
-				4EE17C2028CA589100F3DE0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
