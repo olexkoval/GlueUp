@@ -63,8 +63,8 @@ private extension MovieNetworkImpl {
     let urlString = TMDBConstants.apiScheme + TMDBConstants.apiBaseURL + TMDBConstants.apiVersion + TMDBConstants.apiPopularMovieQuery
     guard let baseURL = URL(string: urlString),
           var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else { return nil }
-    
-    let apiKeyQuery = URLQueryItem(name: TMDBConstants.apiKeyQuery, value: TMDBConstants.apiValueQuery)
+    let apiKey = Bundle.main.object(forInfoDictionaryKey: TMDBConstants.apiLoacalKey) as? String
+    let apiKeyQuery = URLQueryItem(name: TMDBConstants.apiKeyQuery, value: apiKey)
     let pageQuery = URLQueryItem(name: TMDBConstants.pageKeyQuery, value: String(page + 1))
     
     components.queryItems = [apiKeyQuery, pageQuery]

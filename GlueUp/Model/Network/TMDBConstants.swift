@@ -18,7 +18,7 @@ struct TMDBConstants {
     static let apiVersion = "3/"
     static let apiBaseURL = "://api.themoviedb.org/"
     static let apiKeyQuery = "api_key"
-    static let apiValueQuery = "be1eec9f57f124cd1f0a9ad37ecfd4db"
+    static let apiLoacalKey = "TMDB_API_KEY"
     static let pageKeyQuery = "page"
     static let httpMethod = "GET"
     static let timeoutInterval: TimeInterval = 10.0
