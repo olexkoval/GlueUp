@@ -24,6 +24,7 @@ extension MoviePosterLoaderImpl: MoviePosterLoader {
     let onCancel: () -> Void = { dataTask?.cancel() }
     
     return Future<UIImage, MovieNetworkError> { [weak self] promise in
+      
       guard let urlRequest = self?.getMoviePosterUrlRequest(posterId: movie.posterPath) else {
         promise(.failure(MovieNetworkError.urlRequest))
         return
@@ -35,16 +36,18 @@ extension MoviePosterLoaderImpl: MoviePosterLoader {
       }
       
       dataTask = URLSession.shared.dataTask(with: urlRequest) { [weak self] (data, response, error) in
-        guard let data = data else {
-          promise(.failure((error != nil) ? .url(error!) : .urlRequest))
-          return
-        }
-        if let image = UIImage(data: data) {
-          self?.imageCache.setObject(image, forKey: response!.url!.absoluteString as NSString)
-          promise(.success(image))
-          
-        } else {
-          promise(.failure(.decode))
+        DispatchQueue.global(qos: .userInitiated).async {
+          guard let data = data else {
+            promise(.failure((error != nil) ? .url(error!) : .urlRequest))
+            return
+          }
+          if let image = UIImage(data: data) {
+            self?.imageCache.setObject(image, forKey: response!.url!.absoluteString as NSString)
+            promise(.success(image))
+            
+          } else {
+            promise(.failure(.decode))
+          }
         }
       }
     }
