@@ -19,13 +19,12 @@ protocol MovieDatabase {
 final class MovieDatabaseImpl {
   
   private let persistentContainer: NSPersistentContainer
-  private let backgroundContext: NSManagedObjectContext
+  private var backgroundContext: NSManagedObjectContext!
   private let subject = PassthroughSubject<[MovieMO], NSError>()
   private var bindings = Set<AnyCancellable>()
 
   init() {
     persistentContainer = NSPersistentContainer(name: "GlueUp")
-    backgroundContext = persistentContainer.newBackgroundContext()
     setupStore()
     setupBindings()
   }
@@ -81,12 +80,13 @@ private extension MovieDatabaseImpl {
   }
     
     func setupStore() {
-        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
         persistentContainer.loadPersistentStores(completionHandler: { [weak self] storeDescription, error in
           if let error = error as NSError? {
             self?.subject.send(completion: .failure(error))
           }
         })
+      backgroundContext = persistentContainer.newBackgroundContext()
+      persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
     }
   
   func setupBindings() {
