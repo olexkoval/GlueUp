@@ -53,14 +53,14 @@ final class MovieTableViewCell: UITableViewCell {
     
     movieImageView.contentMode = .scaleAspectFit
     NSLayoutConstraint.activate([
-      movieImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10.0),
+      movieImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: C.paddingOffset),
       movieImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
       movieImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-      movieImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 45.0),
-      movieImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 30.0),
+      movieImageView.heightAnchor.constraint(lessThanOrEqualToConstant: C.imageMaxHeight),
+      movieImageView.widthAnchor.constraint(lessThanOrEqualToConstant: C.imageMaxWidth),
       movieTitleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      movieTitleLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 10.0),
-      contentView.trailingAnchor.constraint(lessThanOrEqualTo: movieTitleLabel.trailingAnchor, constant: 10.0)
+      movieTitleLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: C.paddingOffset),
+      contentView.trailingAnchor.constraint(equalTo: movieTitleLabel.trailingAnchor, constant: C.paddingOffset)
     ])
   }
   
@@ -78,5 +78,13 @@ final class MovieTableViewCell: UITableViewCell {
         }
       }
     subscription?.store(in: &bindings)
+  }
+}
+
+private extension MovieTableViewCell {
+  struct C {
+    static let paddingOffset: CGFloat = 10.0
+    static let imageMaxHeight: CGFloat = 45.0
+    static let imageMaxWidth: CGFloat = 30.0
   }
 }
