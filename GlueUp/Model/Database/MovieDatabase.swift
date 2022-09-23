@@ -25,13 +25,8 @@ final class MovieDatabaseImpl {
 
   init() {
     persistentContainer = NSPersistentContainer(name: "GlueUp")
-    persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
-    persistentContainer.loadPersistentStores(completionHandler: { storeDescription, error in
-      if let error = error as NSError? {
-        fatalError("Unresolved error \(error), \(error.userInfo)")
-      }
-    })
     backgroundContext = persistentContainer.newBackgroundContext()
+    setupStore()
     setupBindings()
   }
 }
@@ -84,6 +79,15 @@ private extension MovieDatabaseImpl {
   var mainContext: NSManagedObjectContext {
     persistentContainer.viewContext
   }
+    
+    func setupStore() {
+        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+        persistentContainer.loadPersistentStores(completionHandler: { [weak self] storeDescription, error in
+          if let error = error as NSError? {
+            self?.subject.send(completion: .failure(error))
+          }
+        })
+    }
   
   func setupBindings() {
     FetchedResultsPublisher(request: fetchRequest, context: mainContext)
