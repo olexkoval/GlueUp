@@ -43,7 +43,7 @@ final class MovieListViewController: UITableViewController {
     super.viewDidLoad()
     
     tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
-    
+    tableView.separatorColor = .clear
     configActivityIndicator()
     configRefreshControl()
     bindViewModelToView()
@@ -61,6 +61,9 @@ final class MovieListViewController: UITableViewController {
       initialDataRequested = true
     }
   }
+}
+
+extension MovieListViewController {
   
   override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
@@ -88,12 +91,19 @@ final class MovieListViewController: UITableViewController {
     cell.didDisappear()
   }
   
-  private func configRefreshControl() {
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    C.cellHeight
+  }
+}
+
+private extension MovieListViewController {
+  
+  func configRefreshControl() {
     refreshControl = UIRefreshControl()
     refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
   }
   
-  private func configActivityIndicator() {
+  func configActivityIndicator() {
     activityIndicator = UIActivityIndicatorView(style: .large)
     activityIndicator.translatesAutoresizingMaskIntoConstraints = false
     self.view.addSubview(activityIndicator)
@@ -103,7 +113,8 @@ final class MovieListViewController: UITableViewController {
     ])
   }
   
-  private func bindViewModelToView() {
+  
+  func bindViewModelToView() {
     viewModel.moviesPublisher
       .receive(on: RunLoop.main)
       .sink(receiveValue: { [weak self] _ in
@@ -131,11 +142,28 @@ final class MovieListViewController: UITableViewController {
       .store(in: &bindings)
   }
   
-  private func tableLastItemReached() {
+  func finishedLoading() {
+    view.isUserInteractionEnabled = true
+    refreshControl?.endRefreshing()
+    activityIndicator.stopAnimating()
+  }
+  
+  func updateSections() {
+    var snapshot = MoviesSnapshot()
+    snapshot.appendSections([.movies])
+    snapshot.appendItems(viewModel.movies)
+    dataSource.apply(snapshot, animatingDifferences: true)
+  }
+  
+  @objc func refresh() {
+    startLoading(with: { viewModel.reloadData() })
+  }
+  
+  func tableLastItemReached() {
     startLoading(with: { viewModel.loadNextPage() })
   }
   
-  private func startLoading(with action:(() -> Void)) {
+  func startLoading(with action:(() -> Void)) {
     view.isUserInteractionEnabled = false
     if !(refreshControl?.isRefreshing ?? false) {
       activityIndicator.startAnimating()
@@ -143,20 +171,7 @@ final class MovieListViewController: UITableViewController {
     action()
   }
   
-  private func finishedLoading() {
-    view.isUserInteractionEnabled = true
-    refreshControl?.endRefreshing()
-    activityIndicator.stopAnimating()
-  }
-  
-  private func updateSections() {
-    var snapshot = MoviesSnapshot()
-    snapshot.appendSections([.movies])
-    snapshot.appendItems(viewModel.movies)
-    dataSource.apply(snapshot, animatingDifferences: true)
-  }
-  
-  @objc private func refresh() {
-    startLoading(with: { viewModel.reloadData() })
+  struct C {
+    static let cellHeight: CGFloat = 50.0
   }
 }

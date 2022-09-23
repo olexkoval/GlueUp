@@ -54,10 +54,11 @@ final class MovieTableViewCell: UITableViewCell {
     movieImageView.contentMode = .scaleAspectFit
     NSLayoutConstraint.activate([
       movieImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: C.paddingOffset),
-      movieImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-      movieImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+      movieImageView.topAnchor.constraint(lessThanOrEqualTo: contentView.topAnchor),
+      movieImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor),
       movieImageView.heightAnchor.constraint(lessThanOrEqualToConstant: C.imageMaxHeight),
       movieImageView.widthAnchor.constraint(lessThanOrEqualToConstant: C.imageMaxWidth),
+      movieImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       movieTitleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       movieTitleLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: C.paddingOffset),
       contentView.trailingAnchor.constraint(equalTo: movieTitleLabel.trailingAnchor, constant: C.paddingOffset)
