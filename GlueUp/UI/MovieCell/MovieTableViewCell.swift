@@ -47,10 +47,10 @@ final class MovieTableViewCell: UITableViewCell {
   private func setupSubviews() {
     
     [movieTitleLabel, movieImageView].forEach {
-      addSubview($0)
+      contentView.addSubview($0)
       $0.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+    movieTitleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     movieImageView.contentMode = .scaleAspectFit
     NSLayoutConstraint.activate([
       movieImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: C.paddingOffset),
