@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>TMDB_API_KEY</key>
-	<string>be1eec9f57f124cd1f0a9ad37ecfd4db</string>
+	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

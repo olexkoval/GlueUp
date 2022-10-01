@@ -17,3 +17,9 @@ The app consists of the two screens:
 • Error handling
 
 Swinject, Combine, CoreData, MVVM+C
+
+## ⚙️ Configuration
+
+In order to use GlueUp:
+- You need to get API KEY from TMDb. You can do that by clicking [here](https://www.themoviedb.org/signup).
+- Once you obtain key, add your key into Info.plist`TMDB_API_KEY = "xxx" `

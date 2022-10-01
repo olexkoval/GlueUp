@@ -58,7 +58,6 @@ final class MovieTableViewCell: UITableViewCell {
       movieImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor),
       movieImageView.heightAnchor.constraint(lessThanOrEqualToConstant: C.imageMaxHeight),
       movieImageView.widthAnchor.constraint(lessThanOrEqualToConstant: C.imageMaxWidth),
-      movieImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       movieTitleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
       movieTitleLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: C.paddingOffset),
       contentView.trailingAnchor.constraint(equalTo: movieTitleLabel.trailingAnchor, constant: C.paddingOffset)
